@@ -5,6 +5,9 @@ unless Array::filter
 # needed to work with minification
 window.todoapp = angular.module 'todoapp', []
 window.todoapp.controller 'TodoCtrl', [ '$scope', ($scope) ->
+  options =
+    item: 'book-item'
+  $scope.booksList = new List 'book-list', options
 
   # TODO SB descriptions should not be to long or shortened client-side
   $scope.staticBooks = [
@@ -30,7 +33,8 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', ($scope) ->
     }
   ]
 
-  $scope.books = (searchkey, location) -> $scope.staticBooks
+  $scope.books = (searchkey, location) ->
+    $scope.staticBooks
 
   $scope.authorsToString = (array) ->
     array.reduce (x,y) -> x+", "+y
@@ -39,8 +43,15 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', ($scope) ->
     alert "bla"
     $scope.newBook.authors = [$scope.newBook.authors]
     $scope.staticBooks.push $scope.newBook
-]
 
-options =
-  valueNames: ["title","isbn"]
-booksList = new List 'booksList', options
+  prettifiedBooks = () ->
+    result = $scope.staticBooks.map (v) ->
+      v.authorsAsString = $scope.authorsToString(v.authors)
+      v
+    result
+
+  # Add books to list-js
+  $scope.booksList.add prettifiedBooks()
+
+]
+  

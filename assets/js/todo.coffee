@@ -51,21 +51,14 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', '$http', ($scope, $http) ->
 
   $scope.addBook = () ->
     $scope.newBook.authors = [$scope.newBook.authors]
+    $scope.booksList.add prettifyBooks [$scope.newBook]
     $scope.staticBooks.push $scope.newBook
 
   $scope.OnTitleChange = () ->
-  ###  alert("bla")
-    url = "https://www.googleapis.com/books/v1/volumes?q="+$scope.newBook.title
-    alert(url)
-    alert("inter")
-    $http.get
-      url: url
-      success: (data,status) -> alert("received")
-      error: (data,status) -> alert("received")
-    alert("sent")###
 
-  prettifiedBooks = () ->
-    result = $scope.staticBooks.map (v) ->
+
+  prettifyBooks = (books) ->
+    result = books.map (v) ->
       v.authorsAsString = $scope.authorsToString(v.authors)
       v.imageTag = "<img src='#{v.image}', style='overflow: hidden; width: 100px', width='100'>"
       v.lend = "<a class='btn btn-success pull-right', href='mailto:#{v.lender.email}'> Lend now </a>"
@@ -73,7 +66,7 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', '$http', ($scope, $http) ->
     result
 
   # Add books to list-js
-  $scope.booksList.add prettifiedBooks()
+  $scope.booksList.add prettifyBooks $scope.staticBooks
 
 ]
   

@@ -1,0 +1,32 @@
+!!!
+html(ng-app='todoapp')
+  head
+    title= title
+    //- Livereload (removed in production)
+    - if((process.env.NODE_ENV || 'dev') == 'dev')
+      script(type="text/javascript", src="/javascripts/live.js")
+
+    //- Bootstrap
+    script(type="text/javascript", src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js")
+    script(type="text/javascript", src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js")
+    script(type="text/javascript", src="https://raw.github.com/javve/list/master/list.min.js")
+
+    //- Angular
+    script(src='http://code.angularjs.org/1.1.1/angular.min.js', type='text/javascript')
+
+    //- Angular Controllers
+    block angular
+
+    //- own style
+    link(rel='stylesheet', href='/stylesheets/style.css')
+
+    //- twitter bootstrap styles
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+
+    link(href='//netdna.bootstrapcdn.com/bootswatch/2.2.2/united/bootstrap.min.css', rel='stylesheet')
+    link(href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-responsive.min.css", rel="stylesheet")
+
+    block scripts
+    block styles
+  body
+    block body

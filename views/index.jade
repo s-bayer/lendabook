@@ -17,8 +17,8 @@ block body
         a.brand(href="#") Lend a book
         .nav-collapse.collapse
           ul.nav
-            li.active: a(href="/") Ausleihen
-            li: a(href="/lend") Verleihen
+            li.active: a(href="#") Home
+            li: a(href="#about") About
             li: a(href="#contact") Contact
   .container
     .row(ng-controller="TodoCtrl")
@@ -40,7 +40,7 @@ block body
               h5(style='display: inline;') ISBN: 
                 span(class='isbn') {{book.isbn}}
               p {{book.description}}
-              a.btn.btn-success.pull-right Lend now
+              a.btn.btn-success.pull-right(href="mailto:{{book.lender.email}}") Lend now
       p.lead Missing a book? Want to contribute? 
         a Add yours!
 

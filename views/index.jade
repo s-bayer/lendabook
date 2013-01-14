@@ -42,21 +42,27 @@ block body
               p {{book.description}}
               a.btn.btn-success.pull-right(href="mailto:{{book.lender.email}}") Lend now
       p.lead Missing a book? Want to contribute? 
-        a(href="#addBook", role="button", class="btn", data-toggle="modal") Add yours!
-      div(id="addBook", class="modal hide fade", role="dialog", aria-hidden="true")
-        div(class="modal-header")
-          button(type="button", class="close", data-dismiss="modal", aria-hidden="true") &times;
+        a.btn(href="#addBook", role="button", data-toggle="modal") Add yours!
+      #addBook.modal.hide.fade(role="dialog", aria-hidden="true")
+        .modal-header
+          button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;
           h3 Add a new book
-        div(class="modal-body")
-          input(type="text", placeholder="Title", ng-model="newBook.title")
-          input(type="text", placeholder="ISBN", ng-model="newBook.isbn")
-          br
-          input(type="text", placeholder="Authors", ng-model="newBook.authors")
-          br
-          input(type="text", placeholder="Description", ng-model="newBook.description")
-          h5 Who are you?
-          input(type="text", placeholder="E-Mail", ng-model="newBook.lender.email")
-          br
-          input(type="text", placeholder="City", ng-model="newBook.location")
-        div(class="modal-footer")
+        .modal-body.clearfix
+          div(style="float: left; width: 50%;")
+            input(type="text", placeholder="Title", ng-model="newBook.title")
+            br
+            input(type="text", placeholder="ISBN", ng-model="newBook.isbn")
+            br
+            input(type="text", placeholder="Image", ng-model="newBook.image")
+            br
+            input(type="text", placeholder="Authors", ng-model="newBook.authors")
+            br
+            input(type="text", placeholder="Description", ng-model="newBook.description")
+            h5 Who are you?
+            input(type="text", placeholder="E-Mail", ng-model="newBook.lender.email")
+            br
+            input(type="text", placeholder="City", ng-model="newBook.location")
+          div(style="float: right; width: 50%;")
+            img(style="overflow: hidden; width: 100px; top: 0px;", width="100", src="{{newBook.image}}")
+        .modal-footer
           a(href="#", class="btn btn-primary", ng-click="addBook()", data-dismiss="modal") Add book

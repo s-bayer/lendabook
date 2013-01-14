@@ -7,7 +7,6 @@ block angular
 
 block body
   .navbar.navbar-fixed-top
-    img.pull-left(src="/images/logo.png", style="width: 40px; height:40px;")   
     .navbar-inner
       .container
         div(data-toggle="collapse", data-target=".nav-collapse")
@@ -15,7 +14,9 @@ block body
             span.icon-bar
             span.icon-bar
             span.icon-bar
-        a.brand(href="#") Lend a book
+        a.brand(href="#")
+          img.pull-left(src="/images/logo.png", style="width: 20px; height:20px; margin-bottom: 0px;")   
+          | Lend a book
         .nav-collapse.collapse
           ul.nav
             li.active: a(href="#") Home

@@ -20,8 +20,7 @@ block body
         .nav-collapse.collapse
           ul.nav
             li.active: a(href="#") Home
-            li: a(href="#about") About
-            li: a(href="#contact") Contact
+            li: a(href="#about") What's this page about?
   .container
     .row(ng-controller="TodoCtrl")
       h3(style='margin-bottom: 0.6em;') 
@@ -70,3 +69,18 @@ block body
             img(style="overflow: hidden; width: 100px; top: 0px;", width="100", src="{{newBook.image}}")
         .modal-footer
           a(href="#", class="btn btn-primary", ng-click="addBook()", data-dismiss="modal") Add book
+      h2#about What's this page about?
+      p
+        | This prototype of a business idea was created on the 14th of January 2013
+        | during the 4 hour venture event.
+      p
+        | The 4 hour venture event is an event format to practice rapid prototyping.
+      p
+        | Each participating team fosters one business idea from zero to a first prototype during 4 hours.
+        | After 4 hours the current state is fixed and published.
+
+      h3 This business idea was fostered by
+      ul
+        li Bayer Sebastian
+        li Lütjohann Dominic
+        li Meßmer Sebastian

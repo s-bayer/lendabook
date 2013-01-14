@@ -36,6 +36,9 @@ block body
             h4 {{book.title}}
              br
              small from {{authorsToString(book.authors)}}
+            h5(style='display: inline;') ISBN: 
+            | {{book.isbn}}
+            p {{book.description}}
         li
           | Missing a book? Want to contribute? Add yours!
       div.span12

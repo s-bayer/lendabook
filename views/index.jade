@@ -42,4 +42,12 @@ block body
               p {{book.description}}
               a.btn.btn-success.pull-right Lend now
       p.lead Missing a book? Want to contribute? 
-        a Add yours!
+        a(href="#addBook", role="button", class="btn", data-toggle="modal") Add yours!
+      div(id="addBook", class="modal hide fade", role="dialog", aria-hidden="true")
+        div(class="modal-header")
+          button(type="button", class="close", data-dismiss="modal", aria-hidden="true") &times;
+          h3 Add a new book
+        div(class="modal-body")
+          p Fields go here
+        div(class="modal-footer")
+          a(href="#", class="btn btn-primary") Add book

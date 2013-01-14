@@ -7,7 +7,7 @@ window.todoapp = angular.module 'todoapp', []
 window.todoapp.controller 'TodoCtrl', [ '$scope', ($scope) ->
 
   # TODO SB descriptions should not be to long or shortened client-side
-  $scope.books = (searchkey, location) -> [
+  $scope.staticBooks = [
     {
       title: 'Harry Potter und der Stein der Weisen'
       authors: ['Joanne K. Rowling']
@@ -30,12 +30,15 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', ($scope) ->
     }
   ]
 
+  $scope.books = (searchkey, location) -> $scope.staticBooks
+
   $scope.authorsToString = (array) ->
     array.reduce (x,y) -> x+", "+y
 
-  $scope.addBook = (title, authors, isbn, location) ->
-    $scope.books.push {title: title, authors: authors, isbn: isbn, location: location}
-    
+  $scope.addBook = () ->
+    alert "bla"
+    $scope.newBook.authors = [$scope.newBook.authors]
+    $scope.staticBooks.push $scope.newBook
 ]
 
 options =

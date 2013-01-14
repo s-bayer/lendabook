@@ -46,6 +46,7 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', ($scope) ->
   prettifiedBooks = () ->
     result = $scope.staticBooks.map (v) ->
       v.authorsAsString = $scope.authorsToString(v.authors)
+      v.imageTag = "<img src='#{v.image}', style='overflow: hidden; width: 100px', width='100'>"
       v
     result
 

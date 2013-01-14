@@ -13,4 +13,5 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', ($scope) ->
 
   $scope.addBook = (title, authors, isbn, location) ->
     $scope.books.push {title: title, authors: authors, isbn: isbn, location: location}
+    
 ]

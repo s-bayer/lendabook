@@ -35,7 +35,7 @@ app.configure('development', function(){
 });
 
 app.get('/', routes.index);
-app.get('/users', user.list);
+app.get('/lend', routes.lend);
 
 /*app.head('/js/todo.js', function(req, response) {
   var options = {method: 'GET', host: 'localhost', port: 3000, path: '/js/todo.js'};

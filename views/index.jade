@@ -43,3 +43,18 @@ block body
               a.btn.btn-success.pull-right Lend now
       p.lead Missing a book? Want to contribute? 
         a Add yours!
+
+      form.span12
+        h5 The book
+        input(type="text", placeholder="Title", ng-model="newBook.title")
+        input(type="text", placeholder="ISBN", ng-model="newBook.isbn")
+        br
+        input(type="text", placeholder="Authors", ng-model="newBook.authors")
+        br
+        input(type="text", placeholder="Description", ng-model="newBook.description")
+        h5 Who are you?
+        input(type="text", placeholder="E-Mail", ng-model="newBook.lender.email")
+        br
+        input(type="text", placeholder="City", ng-model="newBook.location")
+        br
+        button(ng-click="addBook()") Add

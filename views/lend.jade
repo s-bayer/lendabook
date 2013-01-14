@@ -29,14 +29,14 @@ block body
       form.span12
         h5 The book
         input(type="text", placeholder="Title", ng-model="title")
-        input(type="text", placeholder="ISBN", ng-model="title")
+        input(type="text", placeholder="ISBN", ng-model="isbn")
         br
-        input(type="text", placeholder="Authors")
+        input(type="text", placeholder="Authors", ng-model="authors")
         br
-        input(type="text", placeholder="Description")
+        input(type="text", placeholder="Description", ng-model="desc")
         h5 Who are you?
-        input(type="text", placeholder="E-Mail")
+        input(type="text", placeholder="E-Mail", ng-model="email")
         br
-        input(type="text", placeholder="City")
+        input(type="text", placeholder="City", ng-model="location")
         br
-        input(type="submit", ng-click="")
+        button(title="bla", ng-click="addBook()")

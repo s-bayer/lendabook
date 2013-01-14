@@ -30,7 +30,9 @@ block body
         input(type="text", placeholder="name, author, description, ISBN …")
       ul.unstyled.span12
         li(ng-repeat="book in books('','')")
-          {{book.title}}
+          h4 {{book.title}} 
+           br
+           small from {{authorsToString(book.authors)}}
         li
           | Missing a book? Want to contribute? Add yours!
       div.span12

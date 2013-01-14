@@ -27,7 +27,7 @@ block body
       h4 Lend it for free from our Community
         small.pull-right over 3000 books available in Karlsruhe
       form.span12(ng-submit='addTodo()')
-        input(type="text", ng-model="todoText", placeholder="What next?")
+        input(type="text", ng-model="todoText", placeholder="name, author, description, ISBN …")
       ul.unstyled.span12
         li(ng-repeat="todo in getTodos()")
           label.checkbox

@@ -14,30 +14,24 @@ block body
             span.icon-bar
             span.icon-bar
             span.icon-bar
-        a.brand(href="#") Awesome Todos
+        a.brand(href="#") Lend a book
         .nav-collapse.collapse
           ul.nav
-            li.active.stage1.dropdown: a(href="#") Home
-            li.stage1.dropdown: a(href="#about") About Us
-            li.stage1.dropdown: a(href="#contact") Contact
+            li.active: a(href="#") Home
+            li: a(href="#about") About Us
+            li: a(href="#contact") Contact
   .container
     .row(ng-controller="TodoCtrl")
-      h3(style='margin-bottom: 0.6em;') Get stuff done!
-        small.pull-right {{numRemaining()}} item(s) left
-      form.span12(ng-submit='addTodo()')
-        input(type="text", ng-model="todoText", placeholder="What next?")
+      h3(style='margin-bottom: 0.6em;') 
+        | Want to read a book, but can't afford it?
+      h4 Lend it for free from our Community
+        small.pull-right over 3000 books available in Karlsruhe
+      form.span12
+        input(type="text", placeholder="name, author, description, ISBN …")
       ul.unstyled.span12
-        li(ng-repeat="todo in getTodos()")
-          label.checkbox
-            input.hidden(type='checkbox', ng-model="todo.done")
-            span.lead(style='color: green;', ng-show='todo.done') ✔
-            span.lead(style='color: grey;', ng-show='!todo.done') ✔
-            span.lead(class='done-{{todo.done}}') {{todo.text}}
-            a.pull-right(style='padding-left:3em;', ng-click='removeTodo(todo)')
-              i(class='icon-remove')
+        li(ng-repeat="book in books('','')")
+          {{book.title}}
         li
-          label.checkbox(style='color: gray;')
-            span.lead(style='padding-left: 14px;')
-              {{todoText}}
+          | Missing a book? Want to contribute? Add yours!
       div.span12
         a.pull-right.lead(ng-click='clear()') clear {{numCompleted()}} completed item(s)

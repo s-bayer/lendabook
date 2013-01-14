@@ -29,7 +29,13 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', ($scope) ->
     }
   ]
 
+  $scope.authorsToString = (array) ->
+    array.reduce (x,y) -> x+", "+y
+
   $scope.addBook = (title, authors, isbn, location) ->
     $scope.books.push {title: title, authors: authors, isbn: isbn, location: location}
     
 ]
+
+booksList = new List 'booksList',
+  valueNames: ["title","isbn"]

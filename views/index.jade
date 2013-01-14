@@ -1,64 +1,43 @@
-!!!
-html(ng-app='todoapp')
-  head
-    title= title
-    //- TODO SB remove in production
-    //- Livereload
-    - if((process.env.NODE_ENV || 'dev') == 'dev')
-      script(type="text/javascript", src="/javascripts/live.js")
+extends layouts/main
 
-    //- Bootstrap
-    script(type="text/javascript", src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js")
-    script(type="text/javascript", src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js")
+block angular
+  != js('todo')
+  //- for livereload
+  script(type="text/javascript", src="/javascripts/todo.js")
 
-    //- Angular
-    script(src='http://code.angularjs.org/1.1.1/angular.min.js', type='text/javascript')
-
-    //- Angular Controllers
-    != js('todo')
-    //- for livereload
-    script(type="text/javascript", src="/javascripts/todo.js")
-
-    //- own style
-    link(rel='stylesheet', href='/stylesheets/style.css')
-
-    //- twitter bootstrap styles
-    meta(name="viewport", content="width=device-width, initial-scale=1.0")
-
-    link(href='//netdna.bootstrapcdn.com/bootswatch/2.2.2/united/bootstrap.min.css', rel='stylesheet')
-    link(href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-responsive.min.css", rel="stylesheet")
-  body
-    .navbar.navbar-fixed-top
-      .navbar-inner
-        .container
-          a.btn.btn-navbar(data-toggle="collapse", data-target=".nav-collapse")
+block body
+  .navbar.navbar-fixed-top
+    .navbar-inner
+      .container
+        div(data-toggle="collapse", data-target=".nav-collapse")
+          a.btn.btn-navbar
             span.icon-bar
             span.icon-bar
             span.icon-bar
-          a.brand(href="#") Awesome Todos
-          .nav-collapse
-            ul.nav
-              li.active: a(href="#") Home
-              li: a(href="#about") About
-              li: a(href="#contact") Contact
-    .container
-      .row(ng-controller="TodoCtrl")
-        h3(style='margin-bottom: 0.6em;') Get stuff done!
-          small.pull-right {{numRemaining()}} item(s) left
-        form.span12(ng-submit='addTodo()')
-          input(type="text", ng-model="todoText", placeholder="What next?")
-        ul.unstyled.span12
-          li(ng-repeat="todo in getTodos()")
-            label.checkbox
-              input.hidden(type='checkbox', ng-model="todo.done")
-              span.lead(style='color: green;', ng-show='todo.done') ✔
-              span.lead(style='color: grey;', ng-show='!todo.done') ✔
-              span.lead(class='done-{{todo.done}}') {{todo.text}}
-              a.pull-right(style='padding-left:3em;', ng-click='removeTodo(todo)')
-                i(class='icon-remove')
-          li
-            label.checkbox(style='color: gray;')
-              span.lead(style='padding-left: 14px;')
-                {{todoText}}
-        div.span12
-          a.pull-right.lead(ng-click='clear()') clear {{numCompleted()}} completed item(s)
+        a.brand(href="#") Awesome Todos
+        .nav-collapse.collapse
+          ul.nav
+            li.active.stage1.dropdown: a(href="#") Home
+            li.stage1.dropdown: a(href="#about") About Us
+            li.stage1.dropdown: a(href="#contact") Contact
+  .container
+    .row(ng-controller="TodoCtrl")
+      h3(style='margin-bottom: 0.6em;') Get stuff done!
+        small.pull-right {{numRemaining()}} item(s) left
+      form.span12(ng-submit='addTodo()')
+        input(type="text", ng-model="todoText", placeholder="What next?")
+      ul.unstyled.span12
+        li(ng-repeat="todo in getTodos()")
+          label.checkbox
+            input.hidden(type='checkbox', ng-model="todo.done")
+            span.lead(style='color: green;', ng-show='todo.done') ✔
+            span.lead(style='color: grey;', ng-show='!todo.done') ✔
+            span.lead(class='done-{{todo.done}}') {{todo.text}}
+            a.pull-right(style='padding-left:3em;', ng-click='removeTodo(todo)')
+              i(class='icon-remove')
+        li
+          label.checkbox(style='color: gray;')
+            span.lead(style='padding-left: 14px;')
+              {{todoText}}
+      div.span12
+        a.pull-right.lead(ng-click='clear()') clear {{numCompleted()}} completed item(s)

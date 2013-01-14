@@ -52,7 +52,7 @@ block body
           h3 Add a new book
         .modal-body.clearfix
           div(style="float: left; width: 50%;")
-            input(type="text", placeholder="Title", ng-model="newBook.title")
+            input(type="text", placeholder="Title", ng-model="newBook.title", ng-change="OnTitleChange()")
             br
             input(type="text", placeholder="ISBN", ng-model="newBook.isbn")
             br

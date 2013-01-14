@@ -4,7 +4,7 @@ unless Array::filter
 
 # needed to work with minification
 window.todoapp = angular.module 'todoapp', []
-window.todoapp.controller 'TodoCtrl', [ '$scope', ($scope) ->
+window.todoapp.controller 'TodoCtrl', [ '$scope', '$http', ($scope, $http) ->
   options =
     item: 'book-item'
   $scope.booksList = new List 'book-list', options
@@ -30,6 +30,16 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', ($scope) ->
         email: 'cominch@gmx.de'
       image: 'http://1.bp.blogspot.com/-GhSiZp0aZ4Y/Tx72SUaMR0I/AAAAAAAAAMc/6QXkRY5R7M0/s1600/eragon1.jpg'
       description: 'Irgendwas mit einem Drachen, ziemlich viel Fantasy.'
+    },
+    {
+      title: 'The New Business Road Test'
+      authors: ['John W. Mullins']
+      isbn: '0-273-70805-8'
+      location: 'Karlsruhe'
+      lender:
+        email: 'cie@kit.edu'
+      image: 'http://imgv2-4.scribdassets.com/img/word_document/80290047/255x300/814797a85c/1341953356'
+      description: 'Give your business the chance to be one of those that make it.'
     }
   ]
 
@@ -42,6 +52,17 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', ($scope) ->
   $scope.addBook = () ->
     $scope.newBook.authors = [$scope.newBook.authors]
     $scope.staticBooks.push $scope.newBook
+
+  $scope.OnTitleChange = () ->
+  ###  alert("bla")
+    url = "https://www.googleapis.com/books/v1/volumes?q="+$scope.newBook.title
+    alert(url)
+    alert("inter")
+    $http.get
+      url: url
+      success: (data,status) -> alert("received")
+      error: (data,status) -> alert("received")
+    alert("sent")###
 
   prettifiedBooks = () ->
     result = $scope.staticBooks.map (v) ->

@@ -7,6 +7,7 @@ block angular
 
 block body
   .navbar.navbar-fixed-top
+    img.pull-left(src="/images/logo.png", style="width: 40px; height:40px;")   
     .navbar-inner
       .container
         div(data-toggle="collapse", data-target=".nav-collapse")
@@ -14,30 +15,57 @@ block body
             span.icon-bar
             span.icon-bar
             span.icon-bar
-        a.brand(href="#") Awesome Todos
+        a.brand(href="#") Lend a book
         .nav-collapse.collapse
           ul.nav
-            li.active.stage1.dropdown: a(href="#") Home
-            li.stage1.dropdown: a(href="#about") About Us
-            li.stage1.dropdown: a(href="#contact") Contact
+            li.active: a(href="#") Home
+            li: a(href="#about") About
+            li: a(href="#contact") Contact
   .container
     .row(ng-controller="TodoCtrl")
-      h3(style='margin-bottom: 0.6em;') Get stuff done!
-        small.pull-right {{numRemaining()}} item(s) left
-      form.span12(ng-submit='addTodo()')
-        input(type="text", ng-model="todoText", placeholder="What next?")
-      ul.unstyled.span12
-        li(ng-repeat="todo in getTodos()")
-          label.checkbox
-            input.hidden(type='checkbox', ng-model="todo.done")
-            span.lead(style='color: green;', ng-show='todo.done') ✔
-            span.lead(style='color: grey;', ng-show='!todo.done') ✔
-            span.lead(class='done-{{todo.done}}') {{todo.text}}
-            a.pull-right(style='padding-left:3em;', ng-click='removeTodo(todo)')
-              i(class='icon-remove')
-        li
-          label.checkbox(style='color: gray;')
-            span.lead(style='padding-left: 14px;')
-              {{todoText}}
-      div.span12
-        a.pull-right.lead(ng-click='clear()') clear {{numCompleted()}} completed item(s)
+      h3(style='margin-bottom: 0.6em;') 
+        | Want to read a book, but can't afford it?
+      h4 Lend it for free from our Community
+        small.pull-right over 3000 books available in Karlsruhe
+      .row(id='book-list')
+        form.span12
+          input(class="search", type="text", placeholder="name, author, description, ISBN …")
+        ul.unstyled.span12(class='list')
+        div.hidden
+          li(id='book-item')
+            .span12.clearfix
+              div.pull-left(class="imageTag", style="width: 200px; text-align: center; margin-bottom: 10px;")
+              h4
+                span(class='title')
+                br
+                small from 
+                  span(class='authorsAsString')
+              h5(style='display: inline;') ISBN: 
+                span(class='isbn')
+              p(class='description')
+              span(class='lend')
+      p.lead Missing a book? Want to contribute? 
+        a.btn(href="#addBook", role="button", data-toggle="modal") Add yours!
+      #addBook.modal.hide.fade(role="dialog", aria-hidden="true")
+        .modal-header
+          button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;
+          h3 Add a new book
+        .modal-body.clearfix
+          div(style="float: left; width: 50%;")
+            input(type="text", placeholder="Title", ng-model="newBook.title", ng-change="OnTitleChange()")
+            br
+            input(type="text", placeholder="ISBN", ng-model="newBook.isbn")
+            br
+            input(type="text", placeholder="Image", ng-model="newBook.image")
+            br
+            input(type="text", placeholder="Authors", ng-model="newBook.authors")
+            br
+            input(type="text", placeholder="Description", ng-model="newBook.description")
+            h5 Who are you?
+            input(type="text", placeholder="E-Mail", ng-model="newBook.lender.email")
+            br
+            input(type="text", placeholder="City", ng-model="newBook.location")
+          div(style="float: right; width: 50%;")
+            img(style="overflow: hidden; width: 100px; top: 0px;", width="100", src="{{newBook.image}}")
+        .modal-footer
+          a(href="#", class="btn btn-primary", ng-click="addBook()", data-dismiss="modal") Add book

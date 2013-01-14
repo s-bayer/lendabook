@@ -39,7 +39,6 @@ block body
             h5(style='display: inline;') ISBN: 
             | {{book.isbn}}
             p {{book.description}}
-        li
-          | Missing a book? Want to contribute? Add yours!
-      div.span12
-        a.pull-right.lead(ng-click='clear()') clear {{numCompleted()}} completed item(s)
+            a.btn.btn-success.pull-right Ausleihen
+      p.lead Missing a book? Want to contribute? 
+        a Add yours!

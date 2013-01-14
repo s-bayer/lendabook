@@ -36,7 +36,6 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', ($scope) ->
     array.reduce (x,y) -> x+", "+y
 
   $scope.addBook = () ->
-    alert "bla"
     $scope.newBook.authors = [$scope.newBook.authors]
     $scope.staticBooks.push $scope.newBook
 ]

@@ -30,9 +30,12 @@ block body
         input(type="text", placeholder="name, author, description, ISBN …")
       ul.unstyled.span12
         li(ng-repeat="book in books('','')")
-          h4 {{book.title}} 
-           br
-           small from {{authorsToString(book.authors)}}
+          .span12.clearfix
+            div.pull-left(style="width: 200px; text-align: center; margin-bottom: 10px;")
+              img(src="{{book.image}}", style="overflow: hidden;", width="100")
+            h4 {{book.title}}
+             br
+             small from {{authorsToString(book.authors)}}
         li
           | Missing a book? Want to contribute? Add yours!
       div.span12

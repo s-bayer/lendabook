@@ -14,16 +14,18 @@ block body
             span.icon-bar
             span.icon-bar
             span.icon-bar
-        a.brand(href="#") Awesome Todos
+        a.brand(href="#") Lend a book
         .nav-collapse.collapse
           ul.nav
-            li.active.stage1.dropdown: a(href="#") Home
-            li.stage1.dropdown: a(href="#about") About
-            li.stage1.dropdown: a(href="#contact") Contact
+            li.active: a(href="#") Home
+            li: a(href="#about") About
+            li: a(href="#contact") Contact
   .container
     .row(ng-controller="TodoCtrl")
-      h3(style='margin-bottom: 0.6em;') Get stuff done!
-        small.pull-right {{numRemaining()}} item(s) left
+      h3(style='margin-bottom: 0.6em;') 
+        | Want to read a book, but can't afford it?
+      h4 Lend it for free from our Community
+        small.pull-right over 3000 books available in Karlsruhe
       form.span12(ng-submit='addTodo()')
         input(type="text", ng-model="todoText", placeholder="What next?")
       ul.unstyled.span12

@@ -41,10 +41,11 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', ($scope) ->
 
   $scope.addBook = () ->
     $scope.newBook.authors = [$scope.newBook.authors]
+    $scope.booksList.add prettifyBooks [$scope.newBook]
     $scope.staticBooks.push $scope.newBook
 
-  prettifiedBooks = () ->
-    result = $scope.staticBooks.map (v) ->
+  prettifyBooks = (books) ->
+    result = books.map (v) ->
       v.authorsAsString = $scope.authorsToString(v.authors)
       v.imageTag = "<img src='#{v.image}', style='overflow: hidden; width: 100px', width='100'>"
       v.lend = "<a class='btn btn-success pull-right', href='mailto:#{v.lender.email}'> Lend now </a>"
@@ -52,7 +53,7 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', ($scope) ->
     result
 
   # Add books to list-js
-  $scope.booksList.add prettifiedBooks()
+  $scope.booksList.add prettifyBooks $scope.staticBooks
 
 ]
   

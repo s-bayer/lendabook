@@ -6,6 +6,7 @@ unless Array::filter
 window.todoapp = angular.module 'todoapp', []
 window.todoapp.controller 'TodoCtrl', [ '$scope', ($scope) ->
 
+  # TODO SB descriptions should not be to long or shortened client-side
   $scope.books = (searchkey, location) -> [
     {
       title: 'Harry Potter und der Stein der Weisen'
@@ -37,5 +38,6 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', ($scope) ->
     
 ]
 
-booksList = new List 'booksList',
+options =
   valueNames: ["title","isbn"]
+booksList = new List 'booksList', options

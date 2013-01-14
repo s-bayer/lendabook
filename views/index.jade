@@ -26,19 +26,20 @@ block body
         | Want to read a book, but can't afford it?
       h4 Lend it for free from our Community
         small.pull-right over 3000 books available in Karlsruhe
-      form.span12
-        input(type="text", placeholder="name, author, description, ISBN …")
-      ul.unstyled.span12
-        li(ng-repeat="book in books('','')")
-          .span12.clearfix
-            div.pull-left(style="width: 200px; text-align: center; margin-bottom: 10px;")
-              img(src="{{book.image}}", style="overflow: hidden;", width="100")
-            h4 {{book.title}}
-             br
-             small from {{authorsToString(book.authors)}}
-            h5(style='display: inline;') ISBN: 
-            | {{book.isbn}}
-            p {{book.description}}
-            a.btn.btn-success.pull-right Ausleihen
+      .row(id='booksList')
+        form.span12
+          input(type="text", placeholder="name, author, description, ISBN …")
+        ul.unstyled.span12(class='list')
+          li(ng-repeat="book in books('','')")
+            .span12.clearfix
+              div.pull-left(style="width: 200px; text-align: center; margin-bottom: 10px;")
+                img(src="{{book.image}}", style="overflow: hidden; width: 100px", width="100")
+              h4(class='title') {{book.title}}
+                br
+                small from {{authorsToString(book.authors)}}
+              h5(style='display: inline;') ISBN: 
+                span(class='isbn') {{book.isbn}}
+              p {{book.description}}
+              a.btn.btn-success.pull-right Lend now
       p.lead Missing a book? Want to contribute? 
         a Add yours!

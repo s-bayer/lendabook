@@ -16,6 +16,8 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', ($scope) ->
         email: 'messmer@sunsteps.org'
       image: 'http://lakritzplanet.files.wordpress.com/2010/01/lit_hp_stein.jpg'
       description: 'Harry Potter erkennt, dass er kein normaler Junge ist, sondern Zauberkräfte hat und kommt auf die Zauberschule.'
+          email: 'messmer@sunsteps.org'
+        image: 'http://lakritzplanet.files.wordpress.com/2010/01/lit_hp_stein.jpg'
     },
     {
       title: 'Eragon'

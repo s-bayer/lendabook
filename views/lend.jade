@@ -1,0 +1,42 @@
+extends layouts/main
+
+block angular
+  != js('todo')
+  //- for livereload
+  script(type="text/javascript", src="/javascripts/todo.js")
+
+block body
+  .navbar.navbar-fixed-top
+    .navbar-inner
+      .container
+        div(data-toggle="collapse", data-target=".nav-collapse")
+          a.btn.btn-navbar
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+        a.brand(href="#") Lend a book
+        .nav-collapse.collapse
+          ul.nav
+            li: a(href="/") Ausleihen
+            li.active: a(href="/lend") Verleihen
+            li: a(href="#contact") Contact
+  .container
+    .row(ng-controller="TodoCtrl")
+      h3(style='margin-bottom: 0.6em;') 
+        | Your books just accumulate dust?
+      h4 Lend it to people actually reading them
+        small.pull-right over 3000 books available in Karlsruhe
+      form.span12
+        h5 The book
+        input(type="text", placeholder="Title", ng-model="title")
+        input(type="text", placeholder="ISBN", ng-model="title")
+        br
+        input(type="text", placeholder="Authors")
+        br
+        input(type="text", placeholder="Description")
+        h5 Who are you?
+        input(type="text", placeholder="E-Mail")
+        br
+        input(type="text", placeholder="City")
+        br
+        input(type="submit", ng-click="")

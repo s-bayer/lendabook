@@ -97,5 +97,11 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', '$http', ($scope, $http) ->
       alert 'data: ' + data + 'status: ' + status
     )
 
+  # Load book data from google books
+  window.test = (data) ->
+    alert JSON.stringify(data)
+
+  url ='http://books.google.com/books?bibkeys=ISBN:0451526538&jscmd=viewapi&callback=window.test'
+  #$http.jsonp(url)
 ]
   

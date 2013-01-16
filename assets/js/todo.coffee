@@ -51,6 +51,9 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', '$http', ($scope, $http) ->
 
   $scope.addBook = () ->
     $scope.newBook.authors = [$scope.newBook.authors]
+    # send book info via ajax
+    # TODO SB
+    # update view
     $scope.booksList.add prettifyBooks [$scope.newBook]
     $scope.staticBooks.push $scope.newBook
 

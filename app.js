@@ -59,16 +59,6 @@
 
   http.createServer(app).listen(app.get('port'), function() {
     return console.log("Express server listening on port " + app.get('port'));
-    /*
-      snockets.getCompiledChain('public/js/all.js', function(err, jsList){
-        if(err) {
-          console.log("ERROR: " + err);
-        } else {
-          console.log("Compiling " + jsList.length +" files.");
-        }
-      });
-    */
-
   });
 
 }).call(this);

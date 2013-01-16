@@ -37,6 +37,7 @@ app.get '/', routes.index
 
 books = require('./controllers/book.js')
 app.get '/books', books.list
+app.post('/books', books.create);
 # app.get('/books/:id', routes.book);
 
 # Do I really need the process.on and app.on functions

@@ -47,6 +47,8 @@
 
   app.get('/books', books.list);
 
+  app.post('/books', books.create);
+
   process.on('SIGTERM', function() {
     console.log("Closing app...");
     return app.close();

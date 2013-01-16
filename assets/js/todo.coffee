@@ -66,7 +66,21 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', '$http', ($scope, $http) ->
     result
 
   # Add books to list-js
-  $scope.booksList.add prettifyBooks $scope.staticBooks
+  addBooksToListJs = (books) ->
+    $scope.staticBooks = books
+    $scope.booksList.add prettifyBooks $scope.staticBooks
+
+  # Load books via ajax and load them into list-js
+  $http.get("/books").
+    success( (data, status) ->
+      # TODO SB handle server side errors which return JSON
+      addBooksToListJs(data)
+    )
+    .
+    error( (data, status) ->
+      # TODO SB better error handling
+      alert 'data: ' + data + 'status: ' + status
+    )
 
 ]
   

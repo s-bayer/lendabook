@@ -43,6 +43,8 @@
 
   app.get('/', routes.index);
 
+  app.post('/facebook', routes.index);
+
   books = require('./controllers/book.js');
 
   app.get('/books', books.list);

@@ -37,6 +37,7 @@ app.get '/', routes.index
 
 books = require('./controllers/book.js')
 app.get '/books', books.list
+app.post('/books', books.create);
 # app.get('/books/:id', routes.book);
 
 # Do I really need the process.on and app.on functions
@@ -51,14 +52,3 @@ app.on 'close', () ->
 
 http.createServer(app).listen app.get('port'), () ->
   console.log "Express server listening on port " + app.get('port')
-  ###
-  snockets.getCompiledChain('public/js/all.js', function(err, jsList){
-    if(err) {
-      console.log("ERROR: " + err);
-    } else {
-      console.log("Compiling " + jsList.length +" files.");
-    }
-  });
-  ###
-
-

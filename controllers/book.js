@@ -16,4 +16,18 @@
     });
   };
 
+  exports.create = function(req, res) {
+    var book, id;
+    book = new Book(req.body.book);
+    id = book._id;
+    book.save();
+    return res.json({
+      ETag: {
+        id: "" + id,
+        uri: "http://" + (req.header('host')) + req.url,
+        type: "book"
+      }
+    });
+  };
+
 }).call(this);

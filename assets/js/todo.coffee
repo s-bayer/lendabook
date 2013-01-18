@@ -51,6 +51,18 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', '$http', ($scope, $http) ->
 
   $scope.addBook = () ->
     $scope.newBook.authors = [$scope.newBook.authors]
+    # send book info via ajax
+    $http.post("/books", {book: $scope.newBook}).
+      success( (data, status) ->
+        # TODO SB handle server side errors which return JSON
+        addBooksToListJs(data)
+      ).
+      error( (data, status) ->
+        # TODO SB better error handling
+        $scope.error += "error on POST: data: #{JSON.stringify(data)} status: #{status}"
+        alert 'data: ' + JSON.stringify(data) + 'status: ' + status
+      )
+    # update view
     $scope.booksList.add prettifyBooks [$scope.newBook]
     $scope.staticBooks.push $scope.newBook
 
@@ -66,7 +78,30 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', '$http', ($scope, $http) ->
     result
 
   # Add books to list-js
-  $scope.booksList.add prettifyBooks $scope.staticBooks
+  addBooksToListJs = (books) ->
+    $scope.staticBooks = books
+    $scope.booksList.add prettifyBooks $scope.staticBooks
 
+  # Load books via ajax and load them into list-js
+  $http.get("/books").
+    success( (data, status) ->
+      # TODO SB handle server side errors which return JSON
+      if(data.error)
+        alert 'Something went wrong. Please contact us.'
+      else
+        addBooksToListJs(data)
+    )
+    .
+    error( (data, status) ->
+      # TODO SB better error handling
+      alert 'data: ' + data + 'status: ' + status
+    )
+
+  # Load book data from google books
+  window.test = (data) ->
+    alert JSON.stringify(data)
+
+  url ='http://books.google.com/books?bibkeys=ISBN:0451526538&jscmd=viewapi&callback=window.test'
+  $http.jsonp(url)
 ]
   

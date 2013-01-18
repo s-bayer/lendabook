@@ -52,24 +52,24 @@ block body
             button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;
             h3 Add a new book
           .modal-body.clearfix
-            div(style="float: left; width: 50%;")
-              input(type="text", placeholder="Title", ng-model="newBook.title", ng-change="OnTitleChange()")
+            form(style="float: left; width: 50%;", name='addBookForm')
+              input(type="text", placeholder="Title", ng-model="newBook.title", ng-change="OnTitleChange()", required)
               br
-              input(type="text", placeholder="ISBN", ng-model="newBook.isbn")
+              input(type="text", placeholder="ISBN", ng-model="newBook.isbn", required)
               br
-              input(type="text", placeholder="Image", ng-model="newBook.image")
+              input(type="text", placeholder="Image", ng-model="newBook.image", required)
               br
-              input(type="text", placeholder="Authors", ng-model="newBook.authors")
+              input(type="text", placeholder="Authors", ng-model="newBook.authors", required)
               br
-              input(type="text", placeholder="Description", ng-model="newBook.description")
+              input(type="text", placeholder="Description", ng-model="newBook.description", required)
               h5 Who are you?
-              input(type="text", placeholder="E-Mail", ng-model="newBook.lender.email")
+              input(type="text", placeholder="E-Mail", ng-model="newBook.lender.email", required)
               br
-              input(type="text", placeholder="City", ng-model="newBook.location")
+              input(type="text", placeholder="City", ng-model="newBook.location", required)
             div(style="float: right; width: 50%;")
               img(style="overflow: hidden; width: 100px; top: 0px;", width="100", src="{{newBook.image}}")
           .modal-footer
-            a(href="#", class="btn btn-primary", ng-click="addBook()", data-dismiss="modal") Add book
+            a(href="#", class="btn btn-primary", ng-click="addBook()", ng-disabled="addBookForm.$invalid", data-dismiss="modal") Add book
         h2#about What's this page about?
         p
           | This prototype of a business idea was created on the 14th of January 2013
@@ -97,3 +97,4 @@ block body
           |D-76131 Karlsruhe
           br
           |E-Mail: messmer -at- enspire-it.de
+        {{$.errors}}

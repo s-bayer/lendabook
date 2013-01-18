@@ -6,6 +6,7 @@ block angular
   script(type="text/javascript", src="/javascripts/todo.js")
 
 block body
+  #fb-root
   .navbar.navbar-fixed-top
     .navbar-inner
       .container
@@ -98,3 +99,4 @@ block body
           br
           |E-Mail: messmer -at- enspire-it.de
         {{$.errors}}
+  .fb-like(data-href="http://apps.facebook.com/lendabooktest", data-send="true", data-layout="box_count", data-width="450", data-show-faces="true", data-font="lucida grande")

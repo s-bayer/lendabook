@@ -103,5 +103,16 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', '$http', ($scope, $http) ->
 
   url ='http://books.google.com/books?bibkeys=ISBN:0451526538&jscmd=viewapi&callback=window.test'
   $http.jsonp(url)
+
+  # Load Facebook plugin
+  fbinit = (d, s, id) ->
+    fjs = d.getElementsByTagName(s)[0]
+    if !d.getElementById(id)
+      js = d.createElement(s)
+      js.id = id
+      js.src = "//connect.facebook.net/de_DE/all.js#xfbml=1&appId=516801898340306"
+      fjs.parentNode.insertBefore(js, fjs)
+
+  fbinit document, 'script', 'facebook-jssdk'
 ]
   

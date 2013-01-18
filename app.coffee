@@ -13,7 +13,7 @@ snockets = new Snockets()
 app = express()
 
 # Connect to Mongo DB via Mongoose
-mongoose.connect 'mongodb://localhost/test'
+mongoose.connect process.env.MONGOHQ_URL
 
 app.configure () ->
   app.set 'port', process.env.PORT || 3000

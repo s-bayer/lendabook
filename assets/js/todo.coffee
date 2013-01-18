@@ -102,6 +102,6 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', '$http', ($scope, $http) ->
     alert JSON.stringify(data)
 
   url ='http://books.google.com/books?bibkeys=ISBN:0451526538&jscmd=viewapi&callback=window.test'
-  #$http.jsonp(url)
+  $http.jsonp(url)
 ]
   

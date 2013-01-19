@@ -7,6 +7,7 @@ block angular
 
 block body
   #fb-root
+  .fb-like(style="float: left;", data-href="http://apps.facebook.com/lendabooktest", data-send="true", data-layout="box_count", data-width="450", data-show-faces="true", data-font="lucida grande")
   .container
     .row(ng-controller="TodoCtrl")
       .span12
@@ -59,4 +60,3 @@ block body
             a(href="#", class="btn btn-primary", ng-click="addBook()", ng-disabled="addBookForm.$invalid", data-dismiss="modal") Add book
 
         {{$.errors}}
-  .fb-like(style="position: absolute; top: 0;", data-href="http://apps.facebook.com/lendabooktest", data-send="true", data-layout="box_count", data-width="450", data-show-faces="true", data-font="lucida grande")

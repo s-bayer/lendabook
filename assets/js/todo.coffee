@@ -6,10 +6,6 @@ unless Array::filter
 window.todoapp = angular.module 'todoapp', []
 window.todoapp.controller 'TodoCtrl', [ '$scope', '$http', ($scope, $http) ->
 
-  serverBooks = 
-    add: (book, callbacks) ->
-
-
   books = 
     listjs:(() -> 
       options = 

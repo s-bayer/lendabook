@@ -107,11 +107,11 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', '$http', ($scope, $http) ->
   window.fbAsyncInit = () ->
     # init the FB JS SDK
     FB.init
-      appId      : '516801898340306', // App ID from the App Dashboard
-      channelUrl : '//www.lendabook.org/channel', // Channel File for x-domain communication
-      status     : true, // check the login status upon init?
-      cookie     : true, // set sessions cookies to allow your server to access the session?
-      xfbml      : true  // parse XFBML tags on this page?
+      appId      : '516801898340306' # App ID from the App Dashboard
+      channelUrl : '//www.lendabook.org/channel' # Channel File for x-domain communication
+      status     : true # check the login status upon init?
+      cookie     : true # set sessions cookies to allow your server to access the session?
+      xfbml      : true # parse XFBML tags on this page?
     # Additional initialization code such as adding Event Listeners goes here
 
   # Load Facebook plugin

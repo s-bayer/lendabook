@@ -12,7 +12,7 @@ block body
     .row(ng-controller="TodoCtrl")
       .span12
         h3(style='margin-bottom: 0.6em;') 
-          | Hallo {{user.name}}. Du willst ein Buch lesen, es dir aber nicht kaufen?
+          | Hallo {{user.first_name}}. Du willst ein Buch lesen, es dir aber nicht kaufen?
         h4 Leih es dir aus unserer Community aus.
           //small.pull-right over 3000 books available in Karlsruhe
         .row(id='book-list')
@@ -59,10 +59,10 @@ block body
               input(type="text", placeholder="Autoren", ng-model="newBook.authors", required)
               br
               input(type="text", placeholder="Beschreibung", ng-model="newBook.description", required)
-              h5 Who are you?
-              input(type="text", placeholder="E-Mail", ng-model="newBook.lender.email", required)
-              br
-              input(type="text", placeholder="Stadt", ng-model="newBook.location", required)
+              //h5 Who are you?
+              //input(type="text", placeholder="E-Mail", ng-model="newBook.lender.email", required)
+              //br
+              //input(type="text", placeholder="Stadt", ng-model="newBook.location", required)
             div(style="float: right; width: 50%;")
               img(style="overflow: hidden; width: 100px; top: 0px;", width="100", src="{{newBook.image}}")
           .modal-footer

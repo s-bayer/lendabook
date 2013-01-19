@@ -12,7 +12,6 @@
     isbn: String,
     location: String,
     lender: {
-      email: String,
       id: String
     },
     image: String,

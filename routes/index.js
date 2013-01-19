@@ -10,6 +10,12 @@
     });
   };
 
+  exports.facebook = function(req, res) {
+    return res.render('facebook', {
+      title: 'Lend a book'
+    });
+  };
+
   exports.fbchannel = function(req, res) {
     return res.render('channel');
   };

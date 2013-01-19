@@ -4,6 +4,9 @@ mongoose = require 'mongoose'
 exports.index = (req, res) ->
   res.render 'index', { title: 'Lend a book' }
 
+exports.facebook = (req, res) ->
+  res.render 'facebook', { title: 'Lend a book' }
+
 exports.fbchannel = (req, res) ->
   res.render 'channel'
 

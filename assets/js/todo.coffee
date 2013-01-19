@@ -113,6 +113,13 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', '$http', ($scope, $http) ->
       cookie     : true # set sessions cookies to allow your server to access the session?
       xfbml      : true # parse XFBML tags on this page?
     # Additional initialization code such as adding Event Listeners goes here
+    FB.login (response) ->
+      if response.authResponse
+        #Success
+        FB.api '/me', (response) ->
+          console.log('Good to see you, ' + response.name + '.');
+      else
+        alert "Not authorized"
 
   # Load Facebook plugin
   fbinit = (d, s, id) ->

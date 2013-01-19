@@ -118,6 +118,7 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', '$http', ($scope, $http) ->
         #Success
         FB.api '/me', (response) ->
           $scope.username = response.name
+          alert($scope.username)
       else
         alert "Not authorized"
 

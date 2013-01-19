@@ -3,8 +3,8 @@ unless Array::filter
     element for element in this when callback(element)
 
 # needed to work with minification
-window.todoapp = angular.module 'todoapp', []
-window.todoapp.controller 'TodoCtrl', [ '$scope', '$http', ($scope, $http) ->
+window.bookapp = angular.module 'bookapp', []
+window.bookapp.controller 'BookCtrl', [ '$scope', '$http', ($scope, $http) ->
 
   books = 
     listjs:(() -> 

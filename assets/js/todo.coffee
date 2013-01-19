@@ -5,67 +5,64 @@ unless Array::filter
 # needed to work with minification
 window.todoapp = angular.module 'todoapp', []
 window.todoapp.controller 'TodoCtrl', [ '$scope', '$http', ($scope, $http) ->
-  options =
-    item: 'book-item'
-  $scope.booksList = new List 'book-list', options
 
-  # TODO SB descriptions should not be to long or shortened client-side
-
-  $scope.books = (searchkey, location) ->
-    $scope.staticBooks
-
-  $scope.authorsToString = (array) ->
-    array.reduce (x,y) -> x+", "+y
-
-  updateLenderInformation = () ->
-    $(".lend").each (index,elem) ->
-      lenderId = $(elem).children(".lenderId").text()
-      FB.api '/'+lenderId, (response)->
-        $(elem).children(".lenderName").text(response.name)
-        $(elem).children(".lenderImage").attr 'src', 'http://graph.facebook.com/'+lenderId+'/picture'
-        $(elem).children(".btn").click () ->
-          FB.ui
-            method: 'send'
-            name: 'Buch ausleihen'
-            link: 'http://apps.facebook.com/lendabooktest'
-            to: lenderId
+  serverBooks = 
+    add: (book, callbacks) ->
 
 
-  $scope.addBook = () ->
-    $scope.newBook.authors = [$scope.newBook.authors]
-    $scope.newBook.lender = $scope.user.id
-    # send book info via ajax
-    $http.post("/books", {book: $scope.newBook}).
-      success( (data, status) ->
-        # TODO SB handle server side errors which return JSON
-        addBooksToListJs(data)
-      ).
-      error( (data, status) ->
-        # TODO SB better error handling
-        $scope.error += "error on POST: data: #{JSON.stringify(data)} status: #{status}"
-        alert 'data: ' + JSON.stringify(data) + 'status: ' + status
-      )
-    # update view
-    $scope.booksList.add prettifyBooks [$scope.newBook]
-    $scope.staticBooks.push $scope.newBook
-    updateLenderInformation()
+  books = 
+    listjs:(() -> 
+      options = 
+        item: 'book-item'
+      new List 'book-list', options
+    )()
 
-  $scope.OnTitleChange = () ->
+    _updateLenderInformation: () ->
+      $(".lend").each (index,elem) ->
+        lenderId = $(elem).children(".lenderId").text()
+        FB.api '/'+lenderId, (response)->
+          $(elem).children(".lenderName").text(response.name)
+          $(elem).children(".lenderImage").attr 'src', 'http://graph.facebook.com/'+lenderId+'/picture'
+          $(elem).children(".btn").click () ->
+            FB.ui
+              method: 'send'
+              name: 'Buch ausleihen'
+              link: 'http://apps.facebook.com/lendabooktest'
+              to: lenderId
 
+    add: (book) ->
+      # send book info via ajax
+      $http.post("/books", {book: book}).
+        success( (data, status) ->
+          # TODO SB handle server side errors which return JSON
+        ).
+        error( (data, status) ->
+          # TODO SB better error handling
+          $scope.error += "error on POST: data: #{JSON.stringify(data)} status: #{status}"
+          alert 'data: ' + JSON.stringify(data) + 'status: ' + status
+        )
+      # update view
+      books.listjs.add prettifyBooks [$scope.newBook]
+      books._updateLenderInformation()
 
-  prettifyBooks = (books) ->
-    result = books.map (v) ->
+  prettifyBooks= (inputBooks) ->
+    inputBooks.map (v) ->
       v.authorsAsString = $scope.authorsToString(v.authors)
       v.imageTag = "<img src='#{v.image}', style='overflow: hidden; width: 100px', width='100'>"
       v.lenderId = v.lender
       v
-    result
 
-  # Add books to list-js
-  addBooksToListJs = (books) ->
-    $scope.staticBooks = books
-    $scope.booksList.add prettifyBooks $scope.staticBooks
-    updateLenderInformation()
+  # TODO SB descriptions should not be to long or shortened client-side
+
+  $scope.authorsToString = (array) ->
+    array.reduce (x,y) -> x+", "+y
+
+  $scope.addBook = () ->
+    $scope.newBook.authors = [$scope.newBook.authors]
+    $scope.newBook.lender = $scope.user.id
+    books.add($scope.newBook)
+
+  $scope.OnTitleChange = () ->
 
   # Load books via ajax and load them into list-js
   $http.get("/books").
@@ -74,7 +71,8 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', '$http', ($scope, $http) ->
       if(data.error)
         alert 'Something went wrong. Please contact us.'
       else
-        addBooksToListJs(data)
+        books.listjs.add prettifyBooks data
+        books._updateLenderInformation()
     )
     .
     error( (data, status) ->
@@ -97,7 +95,6 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', '$http', ($scope, $http) ->
       status     : true # check the login status upon init?
       cookie     : true # set sessions cookies to allow your server to access the session?
       xfbml      : true # parse XFBML tags on this page?
-    # Additional initialization code such as adding Event Listeners goes here
     FB.login (response) ->
       if response.authResponse
         #Success
@@ -108,7 +105,7 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', '$http', ($scope, $http) ->
         alert "Not authorized"
 
   # Load Facebook plugin
-  fbinit = (d, s, id) ->
+  ((d, s, id) ->
     fjs = d.getElementsByTagName(s)[0]
     if !d.getElementById(id)
       js = d.createElement(s)
@@ -116,7 +113,6 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', '$http', ($scope, $http) ->
       js.async = true
       js.src = "//connect.facebook.net/de_DE/all.js#xfbml=1&appId=516801898340306"
       fjs.parentNode.insertBefore(js, fjs)
-
-  fbinit document, 'script', 'facebook-jssdk'
+  )(document, 'script', 'facebook-jssdk')
 ]
   

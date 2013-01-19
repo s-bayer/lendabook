@@ -36,16 +36,25 @@ block body
           div.hidden
             li(id='book-item')
               .span12.clearfix
-                div.pull-left(class="imageTag", style="width: 200px; text-align: center; margin-bottom: 10px;")
-                h4
-                  span(class='title')
-                  br
-                  small from 
-                    span(class='authorsAsString')
-                h5(style='display: inline;') ISBN: 
-                  span(class='isbn')
-                p(class='description')
-                span(class='lend')
+                .row
+                  .span10
+                    div.pull-left(class="imageTag", style="width: 200px; text-align: center; margin-bottom: 10px;")
+                    h4
+                      span(class='title')
+                      br
+                      small von 
+                        span(class='authorsAsString')
+                    h5(style='display: inline;') ISBN: 
+                      span(class='isbn')
+                    p(class='description')
+                  .span2
+                    .lend.pull-right
+                      .lenderId(style="display: none;")
+                      img.lenderImage.pull-right
+                      br
+                      span.lenderName.pull-right
+                      br
+                      a.btn.btn-success.pull-right(href='#') Ausleihen
         p.lead Missing a book? Want to contribute? 
           a.btn(href="#addBook", role="button", data-toggle="modal") Add yours!
         #addBook.modal.hide.fade(role="dialog", aria-hidden="true")

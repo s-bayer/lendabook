@@ -49,6 +49,19 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', '$http', ($scope, $http) ->
   $scope.authorsToString = (array) ->
     array.reduce (x,y) -> x+", "+y
 
+  updateLenderInformation = () ->
+    $(".lenderImage").each (index,elem) ->
+      lenderId = $(elem).text()
+      FB.api '/'+lenderId, (response)->
+        $(elem).text(response.name)
+        $(elem).click () ->
+          FB.ui
+            method: 'send'
+            name: 'Buch ausleihen'
+            link: 'http://apps.facebook.com/lendabooktest'
+            to: lenderId
+
+
   $scope.addBook = () ->
     $scope.newBook.authors = [$scope.newBook.authors]
     $scope.newBook.lender.id = $scope.user.id
@@ -66,6 +79,7 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', '$http', ($scope, $http) ->
     # update view
     $scope.booksList.add prettifyBooks [$scope.newBook]
     $scope.staticBooks.push $scope.newBook
+    updateLenderInformation()
 
   $scope.OnTitleChange = () ->
 
@@ -74,9 +88,7 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', '$http', ($scope, $http) ->
     result = books.map (v) ->
       v.authorsAsString = $scope.authorsToString(v.authors)
       v.imageTag = "<img src='#{v.image}', style='overflow: hidden; width: 100px', width='100'>"
-      #FB.api '/'+v.lender, (response) ->
-      #  alert('Your name is ' + response.name);
-      v.lenderImage = v.lender.id.toString
+      v.lenderImage = v.lender.id
       v.lend = "<a class='btn btn-success pull-right', href='mailto:#{v.lender.email}'> Ausleihen </a>"
       v
     result
@@ -85,6 +97,7 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', '$http', ($scope, $http) ->
   addBooksToListJs = (books) ->
     $scope.staticBooks = books
     $scope.booksList.add prettifyBooks $scope.staticBooks
+    updateLenderInformation()
 
   # Load books via ajax and load them into list-js
   $http.get("/books").

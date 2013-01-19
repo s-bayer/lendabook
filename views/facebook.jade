@@ -22,19 +22,25 @@ block body
           div.hidden
             li(id='book-item')
               .span12.clearfix
-                div.pull-left(class="imageTag", style="width: 200px; text-align: center; margin-bottom: 10px;")
-                h4
-                  span(class='title')
-                  br
-                  small von 
-                    span(class='authorsAsString')
-                  br
-                  small Verleiher: 
-                    a(class='lenderImage', href='#')
-                h5(style='display: inline;') ISBN: 
-                  span(class='isbn')
-                p(class='description')
-                span(class='lend')
+                .row
+                  .span10
+                    div.pull-left(class="imageTag", style="width: 200px; text-align: center; margin-bottom: 10px;")
+                    h4
+                      span(class='title')
+                      br
+                      small von 
+                        span(class='authorsAsString')
+                    h5(style='display: inline;') ISBN: 
+                      span(class='isbn')
+                    p(class='description')
+                  .span2
+                    .lend.pull-right
+                      .lenderId(style="display: none;")
+                      img.lenderImage.pull-right
+                      br
+                      span.lenderName.pull-right
+                      br
+                      a.btn.btn-success.pull-right(href='#') Ausleihen
         p.lead Deine Bücher sammeln nur Staub? Verleihe sie an die Community.
           br
           a.btn(href="#addBook", role="button", data-toggle="modal") Buch eintragen

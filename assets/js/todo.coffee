@@ -50,11 +50,12 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', '$http', ($scope, $http) ->
     array.reduce (x,y) -> x+", "+y
 
   updateLenderInformation = () ->
-    $(".lenderImage").each (index,elem) ->
-      lenderId = $(elem).text()
+    $(".lend").each (index,elem) ->
+      lenderId = $(elem).children(".lenderId").text()
       FB.api '/'+lenderId, (response)->
-        $(elem).text(response.name)
-        $(elem).click () ->
+        $(elem).children(".lenderName").text(response.name)
+        $(elem).children(".lenderImage").attr 'src', 'http://graph.facebook.com/'+lenderId+'/picture'
+        $(elem).children(".btn").click () ->
           FB.ui
             method: 'send'
             name: 'Buch ausleihen'
@@ -88,8 +89,7 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', '$http', ($scope, $http) ->
     result = books.map (v) ->
       v.authorsAsString = $scope.authorsToString(v.authors)
       v.imageTag = "<img src='#{v.image}', style='overflow: hidden; width: 100px', width='100'>"
-      v.lenderImage = v.lender.id
-      v.lend = "<a class='btn btn-success pull-right', href='mailto:#{v.lender.email}'> Ausleihen </a>"
+      v.lenderId = v.lender.id
       v
     result
 

@@ -22,7 +22,6 @@ block body
           ul.nav
             li.active: a(href="#") Home
             li: a(href="#about") What's this page about?
-  .fb-like(data-href="http://apps.facebook.com/lendabooktest", data-send="true", data-layout="box_count", data-width="450", data-show-faces="true", data-font="lucida grande")
   .container
     .row(ng-controller="TodoCtrl")
       .span12
@@ -43,6 +42,7 @@ block body
                   br
                   small from 
                     span(class='authorsAsString')
+                    span(class='lender')
                 h5(style='display: inline;') ISBN: 
                   span(class='isbn')
                 p(class='description')
@@ -100,3 +100,4 @@ block body
           br
           |E-Mail: messmer -at- enspire-it.de
         {{$.errors}}
+  .fb-like(data-href="http://apps.facebook.com/lendabooktest", data-send="true", data-layout="box_count", data-width="450", data-show-faces="true", data-font="lucida grande")

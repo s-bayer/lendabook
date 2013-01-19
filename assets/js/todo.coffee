@@ -51,6 +51,7 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', '$http', ($scope, $http) ->
 
   $scope.addBook = () ->
     $scope.newBook.authors = [$scope.newBook.authors]
+    $scope.newBook.lender.id = $scope.user.id
     # send book info via ajax
     $http.post("/books", {book: $scope.newBook}).
       success( (data, status) ->
@@ -73,6 +74,9 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', '$http', ($scope, $http) ->
     result = books.map (v) ->
       v.authorsAsString = $scope.authorsToString(v.authors)
       v.imageTag = "<img src='#{v.image}', style='overflow: hidden; width: 100px', width='100'>"
+      #FB.api '/'+v.lender, (response) ->
+      #  alert('Your name is ' + response.name);
+      v.lenderImage = v.lender.id.toString
       v.lend = "<a class='btn btn-success pull-right', href='mailto:#{v.lender.email}'> Ausleihen </a>"
       v
     result
@@ -117,7 +121,7 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', '$http', ($scope, $http) ->
       if response.authResponse
         #Success
         FB.api '/me', (response) ->
-          $scope.user.name = response.first_name
+          $scope.user = response
           $scope.$apply()
       else
         alert "Not authorized"

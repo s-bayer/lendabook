@@ -11,9 +11,7 @@
     authors: [String],
     isbn: String,
     location: String,
-    lender: {
-      id: String
-    },
+    lender: String,
     image: String,
     description: String
   });

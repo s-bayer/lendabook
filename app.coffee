@@ -34,7 +34,7 @@ app.configure 'development', () ->
   app.use express.errorHandler()
 
 app.get '/', routes.index
-app.post '/facebook', routes.index
+app.post '/facebook', routes.facebook
 app.get '/channel', routes.fbchannel
 
 books = require('./controllers/book.js')

@@ -43,7 +43,7 @@
 
   app.get('/', routes.index);
 
-  app.post('/facebook', routes.index);
+  app.post('/facebook', routes.facebook);
 
   app.get('/channel', routes.fbchannel);
 

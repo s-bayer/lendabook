@@ -73,7 +73,7 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', '$http', ($scope, $http) ->
     result = books.map (v) ->
       v.authorsAsString = $scope.authorsToString(v.authors)
       v.imageTag = "<img src='#{v.image}', style='overflow: hidden; width: 100px', width='100'>"
-      v.lend = "<a class='btn btn-success pull-right', href='mailto:#{v.lender.email}'> Lend now </a>"
+      v.lend = "<a class='btn btn-success pull-right', href='mailto:#{v.lender.email}'> Ausleihen </a>"
       v
     result
 

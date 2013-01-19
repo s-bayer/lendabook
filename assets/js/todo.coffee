@@ -104,12 +104,23 @@ window.todoapp.controller 'TodoCtrl', [ '$scope', '$http', ($scope, $http) ->
   url ='http://books.google.com/books?bibkeys=ISBN:0451526538&jscmd=viewapi&callback=window.test'
   $http.jsonp(url)
 
+  window.fbAsyncInit = () ->
+    # init the FB JS SDK
+    FB.init
+      appId      : '516801898340306', // App ID from the App Dashboard
+      channelUrl : '//www.lendabook.org/channel', // Channel File for x-domain communication
+      status     : true, // check the login status upon init?
+      cookie     : true, // set sessions cookies to allow your server to access the session?
+      xfbml      : true  // parse XFBML tags on this page?
+    # Additional initialization code such as adding Event Listeners goes here
+
   # Load Facebook plugin
   fbinit = (d, s, id) ->
     fjs = d.getElementsByTagName(s)[0]
     if !d.getElementById(id)
       js = d.createElement(s)
       js.id = id
+      js.async = true
       js.src = "//connect.facebook.net/de_DE/all.js#xfbml=1&appId=516801898340306"
       fjs.parentNode.insertBefore(js, fjs)
 

@@ -10,6 +10,10 @@
     });
   };
 
+  exports.fbchannel = function(req, res) {
+    return res.render('channel');
+  };
+
   exports.books = function(Book) {
     return function(req, res) {
       return Book.find(function(err, books) {

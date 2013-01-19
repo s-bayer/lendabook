@@ -45,6 +45,8 @@
 
   app.post('/facebook', routes.index);
 
+  app.get('/channel', routes.fbchannel);
+
   books = require('./controllers/book.js');
 
   app.get('/books', books.list);

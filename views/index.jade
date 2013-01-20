@@ -79,32 +79,5 @@ block content
               img(style="overflow: hidden; width: 100px; top: 0px;", width="100", src="{{newBook.image}}")
           .modal-footer
             a(href="#", class="btn btn-primary", ng-click="addBook()", ng-disabled="addBookForm.$invalid", data-dismiss="modal") Add book
-        h2#about What's this page about?
-        p
-          | This prototype of a business idea was created on the 14th of January 2013
-          | during the 4 hour venture event in Karlsruhe, Germany.
-        p
-          | The 4 hour venture event is an event format to practice rapid prototyping.
-        p
-          | Each participating team fosters one business idea from zero to a first prototype during 4 hours.
-          | After 4 hours the current state is fixed and published.
-
-        h3 This business idea was fostered by
-        ul
-          li Bayer Sebastian
-          li Lütjohann Dominic
-          li Meßmer Sebastian
-
-        h2 Impressum (inhaltliche Verantwortung)
-        p
-          |Sebastian Meßmer
-          br
-          |Zimmer G101
-          br
-          |Klosterweg 28
-          br
-          |D-76131 Karlsruhe
-          br
-          |E-Mail: messmer -at- enspire-it.de
         {{$.errors}}
   .fb-like(data-href="http://apps.facebook.com/lendabooktest", data-send="true", data-layout="box_count", data-width="450", data-show-faces="true", data-font="lucida grande")

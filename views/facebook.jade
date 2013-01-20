@@ -1,12 +1,11 @@
-extends layouts/main
+extends layouts/fbmain
 
 block angular
   != js('client')
   //- for livereload
   script(type="text/javascript", src="/javascripts/client.js")
 
-block body
-  #fb-root
+block content
   .fb-like(style="float: left;", data-href="http://apps.facebook.com/lendabooktest", data-send="true", data-layout="box_count", data-width="450", data-show-faces="true", data-font="lucida grande")
   .container
     .row(ng-controller="BookCtrl")

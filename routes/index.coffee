@@ -10,6 +10,9 @@ exports.facebook = (req, res) ->
 exports.fbchannel = (req, res) ->
   res.render 'channel'
 
+exports.impressum = (req,res) ->
+  res.render 'impressum', { title: 'Lend a book' }
+
 # GET all books
 exports.books = (Book) ->
   (req, res) ->

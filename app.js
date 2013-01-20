@@ -51,6 +51,8 @@
     app.get('/facebook', routes.facebook);
   }
 
+  app.get('/impressum', routes.impressum);
+
   app.get('/channel', routes.fbchannel);
 
   books = require('./controllers/book.js');

@@ -39,6 +39,7 @@ app.get '/', routes.index
 app.post '/facebook', routes.facebook
 if env=='dev'
   app.get '/facebook', routes.facebook
+app.get '/impressum', routes.impressum
 app.get '/channel', routes.fbchannel
 
 books = require('./controllers/book.js')

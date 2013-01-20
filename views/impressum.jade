@@ -1,0 +1,54 @@
+extends layouts/main
+
+block angular
+  != js('client')
+  //- for livereload
+  script(type="text/javascript", src="/javascripts/client.js")
+
+block content
+  .navbar.navbar-fixed-top
+    .navbar-inner
+      .container
+        div(data-toggle="collapse", data-target=".nav-collapse")
+          a.btn.btn-navbar
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+        a.brand(href="#")
+          img.pull-left(src="/images/logo.png", style="height:30px; margin: -5px 10px -5px 0;")   
+          | Lend a book
+        .nav-collapse.collapse
+          ul.nav
+            li: a(href="/") Home
+            li.active: a(href="/impressum") What's this page about?
+  .container
+    h1.page-header Impressum
+    h2#about What's this page about?
+    p
+      | This prototype of a business idea was created on the 14th of January 2013
+      | during the 4 hour venture event in Karlsruhe, Germany.
+    p
+      | The 4 hour venture event is an event format to practice rapid prototyping.
+    p
+      | Each participating team fosters one business idea from zero to a first prototype during 4 hours.
+      | After 4 hours the current state is fixed and published.
+
+    h3 This business idea was fostered by
+    ul
+      li Bayer Sebastian
+      li Lütjohann Dominic
+      li Meßmer Sebastian
+
+    h2 Inhaltliche Verantwortung
+    p
+      |Sebastian Meßmer
+      br
+      |Zimmer G101
+      br
+      |Klosterweg 28
+      br
+      |D-76131 Karlsruhe
+      br
+      |E-Mail: messmer -at- enspire-it.de
+    {{$.errors}}
+  .fb-like(data-href="http://apps.facebook.com/lendabooktest", data-send="true", data-layout="box_count", data-width="450", data-show-faces="true", data-font="lucida grande")

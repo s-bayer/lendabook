@@ -20,6 +20,12 @@
     return res.render('channel');
   };
 
+  exports.impressum = function(req, res) {
+    return res.render('impressum', {
+      title: 'Lend a book'
+    });
+  };
+
   exports.books = function(Book) {
     return function(req, res) {
       return Book.find(function(err, books) {

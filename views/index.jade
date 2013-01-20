@@ -5,8 +5,7 @@ block angular
   //- for livereload
   script(type="text/javascript", src="/javascripts/client.js")
 
-block body
-  #fb-root
+block content
   .navbar.navbar-fixed-top
     .navbar-inner
       .container
@@ -20,8 +19,8 @@ block body
           | Lend a book
         .nav-collapse.collapse
           ul.nav
-            li.active: a(href="#") Home
-            li: a(href="#about") What's this page about?
+            li.active: a(href="/") Home
+            li: a(href="/impressum") What's this page about?
   .container
     .row(ng-controller="BookCtrl")
       .span12

@@ -12,6 +12,8 @@ mongoose = require 'mongoose'
 snockets = new Snockets()
 app = express()
 
+env = process.env.NODE_ENV || 'dev'
+
 # Connect to Mongo DB via Mongoose
 mongoose.connect process.env.MONGOHQ_URL
 
@@ -35,7 +37,8 @@ app.configure 'development', () ->
 
 app.get '/', routes.index
 app.post '/facebook', routes.facebook
-app.get '/facebook', routes.facebook
+if env=='dev'
+  app.get '/facebook', routes.facebook
 app.get '/channel', routes.fbchannel
 
 books = require('./controllers/book.js')

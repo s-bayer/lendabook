@@ -15,6 +15,7 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', ($scope, $http) ->
 
     _updateLenderInformation: () ->
       $(".lend").each (index,elem) ->
+        bookId = $(elem).children(".bookId").text()
         lenderId = $(elem).children(".lenderId").text()
         FB.api '/'+lenderId, (response)->
           $(elem).children(".lenderName").text(response.name)
@@ -23,7 +24,7 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', ($scope, $http) ->
             FB.ui
               method: 'send'
               name: 'Buch ausleihen'
-              link: 'http://apps.facebook.com/lendabooktest'
+              link: 'http://www.lendabook.org/og/books/'+ bookId
               to: lenderId
 
     add: (book) ->
@@ -46,6 +47,7 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', ($scope, $http) ->
       v.authorsAsString = $scope.authorsToString(v.authors)
       v.imageTag = "<img src='#{v.image}', style='overflow: hidden; width: 100px', width='100'>"
       v.lenderId = v.lender
+      v.bookId = v._id
       v
 
   # TODO SB descriptions should not be to long or shortened client-side

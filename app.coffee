@@ -42,6 +42,10 @@ if env=='dev'
 app.get '/impressum', routes.impressum
 app.get '/channel', routes.fbchannel
 
+og = require('./controllers/og.js')
+app.get '/og/books/:book', og.book
+#app.get '/og/books/:book/image', og.bookimage
+
 books = require('./controllers/book.js')
 app.get '/books', books.list
 app.post('/books', books.create);

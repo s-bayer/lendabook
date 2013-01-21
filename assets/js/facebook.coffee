@@ -50,7 +50,7 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
           to: lenderId
     offer: (bookId) ->
       ensureInit -> FB.api '/me/lendabooktest:offer', 'post', {book: "http://www.lendabook.org/og/books/"+bookId}, (response)->
-        alert(response) #Handle response
+        alert(JSON.stringify(response)) #Handle response
     like: (bookId, callbacks) ->
       ensureInit -> FB.api '/me/og.likes', 'post', {object: "http://www.lendabook.org/og/books/"+bookId}, (response) ->
         #Handle error

@@ -41,12 +41,12 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', ($scope, 
             Facebook.getUser lenderId, (lender)->
               alert(JSON.stringify(lender))
               $(elem).find(".lenderName").text(lender.name)
-              $(elem).find(".lenderImage").attr 'src', 'http://graph.facebook.com/'+lender.id+'/picture'
+              $(elem).find(".lenderImage").attr 'src', 'http://graph.facebook.com/'+lenderId+'/picture'
               $(elem).find(".borrowbtn").click () ->
-                Facebook.lendingRequest bookId, lender.id
+                Facebook.lendingRequest bookId, lenderId
               $(elem).find(".deletebtn").click () ->
                 books.remove(bookId)
-              if lender.id==currentUser.id
+              if lenderId==currentUser.id
                 $(elem).find(".borrowbtn").hide()
                 $(elem).find(".deletebtn").show()
               else

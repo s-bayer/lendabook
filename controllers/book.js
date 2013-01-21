@@ -30,11 +30,27 @@
     });
   };
 
+  exports.read = function(req, res) {
+    var book;
+    return book = Book.findById(req.params.book, function(err, book) {
+      if (err) {
+        return res.json(404, {
+          error: "Book not found"
+        });
+      } else if (book != null) {
+        return res.render('books/book', {
+          book: book
+        });
+      } else {
+        return res.json(404, {
+          error: "Book not found"
+        });
+      }
+    });
+  };
+
   exports["delete"] = function(req, res) {
-    console.log("PAram: " + req.params.book);
     return Book.findById(req.params.book, function(err, book) {
-      console.log("Err: " + err);
-      console.log("Book: " + book);
       if (err) {
         return res.json(404, {
           error: "Book not found"
@@ -43,6 +59,25 @@
         book.remove();
         return res.json({
           success: true
+        });
+      } else {
+        return res.json(404, {
+          error: "Book not found"
+        });
+      }
+    });
+  };
+
+  exports.bookauthor = function(req, res) {
+    var book;
+    return book = Book.findById(req.params.book, function(err, book) {
+      if (err) {
+        return res.json(404, {
+          error: "Book not found"
+        });
+      } else if (book != null) {
+        return res.render('books/bookauthor', {
+          book: book
         });
       } else {
         return res.json(404, {

@@ -18,7 +18,16 @@ exports.create = (req, res) ->
       uri: "http://#{req.header('host')}#{req.url}"
       type: "book"
 
-exports.delete = (req, res) ->
+exports.read = (req,res) ->
+  book = Book.findById req.params.book, (err,book) ->
+    if err
+      res.json(404, {error: "Book not found"})
+    else if book?
+      res.render 'books/book', {book}
+    else
+      res.json(404, {error: "Book not found"})
+
+exports.delete = (req, res) -> 
   Book.findById req.params.book, (err,book) ->
     if err
       res.json(404, {error: "Book not found"})
@@ -26,5 +35,14 @@ exports.delete = (req, res) ->
       book.remove()
       res.json
         success: true
+    else
+      res.json(404, {error: "Book not found"})
+
+exports.bookauthor = (req,res) ->
+  book = Book.findById req.params.book, (err,book) ->
+    if err
+      res.json(404, {error: "Book not found"})
+    else if book?
+      res.render 'books/bookauthor', {book}
     else
       res.json(404, {error: "Book not found"})

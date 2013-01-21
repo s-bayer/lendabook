@@ -52,7 +52,7 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
     lendingRequest: (bookId, lenderId) ->
       ensureInit -> FB.ui {
         method: 'send'
-        link: 'http://www.lendabook.org/og/books/'+ bookId
+        link: 'http://www.lendabook.org/books/'+ bookId
         to: lenderId
       }, (response) ->
         if(!response?)
@@ -62,13 +62,13 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
           alert("Error: "+JSON.stringify(response))
         else
           #Success, register opengraph action for borrowing
-          FB.api '/me/lendabooktest:borrow', 'post', {book: "http://www.lendabook.org/og/books/"+bookId}, (response) ->
+          FB.api '/me/lendabooktest:borrow', 'post', {book: "http://www.lendabook.org/books/"+bookId}, (response) ->
             displayIfError(response)
     offer: (bookId) ->
-      ensureInit -> FB.api '/me/lendabooktest:offer', 'post', {book: "http://www.lendabook.org/og/books/"+bookId}, (response)->
+      ensureInit -> FB.api '/me/lendabooktest:offer', 'post', {book: "http://www.lendabook.org/books/"+bookId}, (response)->
         displayIfError(response)
     like: (bookId, callbacks) ->
-      ensureInit -> FB.api '/me/og.likes', 'post', {object: "http://www.lendabook.org/og/books/"+bookId}, (response) ->
+      ensureInit -> FB.api '/me/og.likes', 'post', {object: "http://www.lendabook.org/books/"+bookId}, (response) ->
         displayIfError(response)
         callbacks.success(response)
     unlike: (likeId, callbacks) ->

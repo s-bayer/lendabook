@@ -42,16 +42,12 @@ if env=='dev'
 app.get '/impressum', routes.impressum
 app.get '/channel', routes.fbchannel
 
-og = require('./controllers/og.js')
-app.get '/og/books/:book', og.book
-app.get '/og/books/:book/author', og.bookauthor
-#app.get '/og/books/:book/image', og.bookimage
-
 books = require('./controllers/book.js')
 app.get '/books', books.list
 app.post '/books', books.create
 app.delete '/books/:book', books.delete
-# app.get('/books/:id', routes.book);
+app.get '/books/:book', books.read
+app.get '/books/:book/author', books.bookauthor
 
 # Do I really need the process.on and app.on functions
 process.on 'SIGTERM', () ->

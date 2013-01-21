@@ -5,7 +5,7 @@ Schema = mongoose.Schema
  
 bookSchema = mongoose.Schema
   title: String
-  authors: [String]
+  author: String
   isbn: String
   location: String
   lender: String

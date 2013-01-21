@@ -23,7 +23,6 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', ($scope, $http) ->
           $(elem).children(".btn").click () ->
             FB.ui
               method: 'send'
-              name: 'Buch ausleihen'
               link: 'http://www.lendabook.org/og/books/'+ bookId
               to: lenderId
 
@@ -44,7 +43,6 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', ($scope, $http) ->
 
   prettifyBooks= (inputBooks) ->
     inputBooks.map (v) ->
-      v.authorsAsString = $scope.authorsToString(v.authors)
       v.imageTag = "<img src='#{v.image}', style='overflow: hidden; width: 100px', width='100'>"
       v.lenderId = v.lender
       v.bookId = v._id
@@ -52,11 +50,7 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', ($scope, $http) ->
 
   # TODO SB descriptions should not be to long or shortened client-side
 
-  $scope.authorsToString = (array) ->
-    array.reduce (x,y) -> x+", "+y
-
   $scope.addBook = () ->
-    $scope.newBook.authors = [$scope.newBook.authors]
     $scope.newBook.lender = $scope.user.id
     books.add($scope.newBook)
 

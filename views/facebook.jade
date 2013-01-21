@@ -24,7 +24,7 @@ block content
           //small.pull-right over 3000 books available in Karlsruhe
         .row(id='book-list')
           form.span12
-            input(class="search", type="text", placeholder="name, author, description, ISBN …")
+            input(class="search", type="text", placeholder="Name, Autor, Beschreibung, ISBN …")
           ul.unstyled.span12(class='list')
           div.hidden
             li(id='book-item')
@@ -36,7 +36,7 @@ block content
                       span(class='title')
                       br
                       small von 
-                        span(class='authorsAsString')
+                        span(class='author')
                     h5(style='display: inline;') ISBN: 
                       span(class='isbn')
                     p(class='description')
@@ -64,7 +64,7 @@ block content
               br
               input(type="text", placeholder="Coverbild", ng-model="newBook.image", required)
               br
-              input(type="text", placeholder="Autoren", ng-model="newBook.authors", required)
+              input(type="text", placeholder="Autoren", ng-model="newBook.author", required)
               br
               input(type="text", placeholder="Beschreibung", ng-model="newBook.description", required)
               //h5 Who are you?

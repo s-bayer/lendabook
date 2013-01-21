@@ -4,7 +4,7 @@ unless Array::filter
 
 # needed to work with minification
 window.bookapp = angular.module 'bookapp', []
-window.bookapp.controller 'BookCtrl', [ '$scope', '$http', ($scope, $http) ->
+window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', ($scope, $http, Facebook) ->
 
   books = 
     listjs:(() -> 
@@ -17,20 +17,17 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', ($scope, $http) ->
       $(".lend").each (index,elem) ->
         bookId = $(elem).children(".bookId").text()
         lenderId = $(elem).children(".lenderId").text()
-        FB.api '/'+lenderId, (response)->
-          $(elem).children(".lenderName").text(response.name)
+        Facebook.getUser lenderId, (user)->
+          $(elem).children(".lenderName").text(user.name)
           $(elem).children(".lenderImage").attr 'src', 'http://graph.facebook.com/'+lenderId+'/picture'
           $(elem).children(".btn").click () ->
-            FB.ui
-              method: 'send'
-              link: 'http://www.lendabook.org/og/books/'+ bookId
-              to: lenderId
+            Facebook.lendingRequest bookId, lenderId
 
     add: (book) ->
       # send book info via ajax
       $http.post("/books", {book: book}).
         success( (data, status) ->
-          # TODO SB handle server side errors which return JSON
+          alert(data)
         ).
         error( (data, status) ->
           # TODO SB better error handling
@@ -76,35 +73,11 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', ($scope, $http) ->
   window.test = (data) ->
     # alert JSON.stringify(data)
 
-  url ='http://books.google.com/books?bibkeys=ISBN:0451526538&jscmd=viewapi&callback=window.test'
+  url = 'http://books.google.com/books?bibkeys=ISBN:0451526538&jscmd=viewapi&callback=window.test'
   $http.jsonp(url)
 
-  window.fbAsyncInit = () ->
-    # init the FB JS SDK
-    FB.init
-      appId      : '516801898340306' # App ID from the App Dashboard
-      channelUrl : '//www.lendabook.org/channel' # Channel File for x-domain communication
-      status     : true # check the login status upon init?
-      cookie     : true # set sessions cookies to allow your server to access the session?
-      xfbml      : true # parse XFBML tags on this page?
-    FB.login (response) ->
-      if response.authResponse
-        #Success
-        FB.api '/me', (response) ->
-          $scope.user = response
-          $scope.$apply()
-      else
-        alert "Not authorized"
-
-  # Load Facebook plugin
-  ((d, s, id) ->
-    fjs = d.getElementsByTagName(s)[0]
-    if !d.getElementById(id)
-      js = d.createElement(s)
-      js.id = id
-      js.async = true
-      js.src = "//connect.facebook.net/de_DE/all.js#xfbml=1&appId=516801898340306"
-      fjs.parentNode.insertBefore(js, fjs)
-  )(document, 'script', 'facebook-jssdk')
+  Facebook.getCurrentUser (user) ->
+    $scope.user = user
+    $scope.$apply()
 ]
   

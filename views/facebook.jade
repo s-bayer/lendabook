@@ -2,8 +2,7 @@ extends layouts/fbmain
 
 block angular
   != js('client')
-  //- for livereload
-  script(type="text/javascript", src="/javascripts/client.js")
+  != js('facebook')
 
 block meta
   meta(property="fb:app_id", content="516801898340306")

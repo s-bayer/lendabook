@@ -38,6 +38,12 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
       fjs.parentNode.insertBefore(js, fjs)
   )(document, 'script', 'facebook-jssdk')
 
+  displayIfError = (response) ->
+    if(!response?)
+      alert "Error: No response"
+    else if(response.error?)
+      alert "Error: "+JSON.stringify(response.error)
+
   service = 
     getCurrentUser: (callback) ->
       ensureInit -> FB.api '/me', callback
@@ -50,17 +56,18 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
           to: lenderId
     offer: (bookId) ->
       ensureInit -> FB.api '/me/lendabooktest:offer', 'post', {book: "http://www.lendabook.org/og/books/"+bookId}, (response)->
-        alert(JSON.stringify(response)) #Handle response
+        displayIfError(response)
     like: (bookId, callbacks) ->
       ensureInit -> FB.api '/me/og.likes', 'post', {object: "http://www.lendabook.org/og/books/"+bookId}, (response) ->
-        #Handle error
+        displayIfError(response)
         callbacks.success(response)
     unlike: (likeId, callbacks) ->
       ensureInit -> FB.api likeId, 'delete', (response) ->
-        #Handle error
+        displayIfError(response)
         callbacks.success(response)
     getLikedBooks: (callback)->
       ensureInit -> FB.api '/me/og.likes?fields=data&app_id_filter='+appId, (queryResult) ->
+        displayIfError(queryResult)
         result = {}
         result[elem.data.object.url] = elem.id for elem in queryResult.data
         callback result

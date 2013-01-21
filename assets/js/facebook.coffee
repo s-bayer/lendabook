@@ -48,6 +48,7 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
     getCurrentUser: (callback) ->
       ensureInit -> FB.api '/me', callback
     getUser: (id,callback) ->
+      alert("Request "+id)
       ensureInit -> FB.api '/'+id, callback
     lendingRequest: (bookId, lenderId) ->
       ensureInit -> FB.ui {

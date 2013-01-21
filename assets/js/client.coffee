@@ -13,17 +13,34 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', ($scope, 
       new List 'book-list', options
     )()
 
-    _updateLenderInformation: () ->
-      $(".lend").each (index,elem) ->
-        bookId = $(elem).children(".bookId").text()
-        lenderId = $(elem).children(".lenderId").text()
-        $(elem).children(".like").click (elem) ->
-          Facebook.like(bookId)
-        Facebook.getUser lenderId, (user)->
-          $(elem).children(".lenderName").text(user.name)
-          $(elem).children(".lenderImage").attr 'src', 'http://graph.facebook.com/'+lenderId+'/picture'
-          $(elem).children(".btn").click () ->
-            Facebook.lendingRequest bookId, lenderId
+    updateLenderInformation: () ->
+      Facebook.getLikedBooks (likedBooks)->
+        $(".book").each (index,elem) ->
+          bookId = $(elem).find(".bookId").text()
+          lenderId = $(elem).find(".lenderId").text()
+          ogUrl = 'http://www.lendabook.org/og/books/'+bookId
+          if likedBooks[ogUrl]?
+            $(elem).find(".like").hide()
+            $(elem).find(".unlike").show()
+          else
+            $(elem).find(".unlike").hide()
+            $(elem).find(".like").show()
+          $(elem).find(".like").click () ->
+            Facebook.like bookId,
+              success: ->
+                $(elem).find(".like").hide()
+                $(elem).find(".unlike").show()
+          $(elem).find(".unlike").click () ->
+            Facebook.getLikedBooks (likedBooks) ->
+              Facebook.unlike likedBooks[ogUrl],
+                success: ->
+                  $(elem).find(".unlike").hide()
+                  $(elem).find(".like").show()
+          Facebook.getUser lenderId, (user)->
+            $(elem).find(".lenderName").text(user.name)
+            $(elem).find(".lenderImage").attr 'src', 'http://graph.facebook.com/'+lenderId+'/picture'
+            $(elem).find(".btn").click () ->
+              Facebook.lendingRequest bookId, lenderId
 
     add: (book) ->
       # send book info via ajax
@@ -38,7 +55,7 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', ($scope, 
         )
       # update view
       books.listjs.add prettifyBooks [$scope.newBook]
-      books._updateLenderInformation()
+      books.updateLenderInformation()
 
   prettifyBooks= (inputBooks) ->
     inputBooks.map (v) ->
@@ -63,7 +80,7 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', ($scope, 
         alert 'Something went wrong. Please contact us.'
       else
         books.listjs.add prettifyBooks data
-        books._updateLenderInformation()
+        books.updateLenderInformation()
     )
     .
     error( (data, status) ->

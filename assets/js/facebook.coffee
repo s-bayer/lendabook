@@ -1,6 +1,8 @@
 # needed to work with minification
 window.bookapp.factory 'Facebook', [ '$http', ($http) ->
 
+  appId = '516801898340306'
+
   fbApiInit = false
   ensureInit = (callback) ->
     if(!fbApiInit || !FB?)
@@ -12,7 +14,7 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
   window.fbAsyncInit = () ->
     # init the FB JS SDK
     FB.init
-      appId      : '516801898340306' # App ID from the App Dashboard
+      appId      : appId # App ID from the App Dashboard
       channelUrl : '//www.lendabook.org/channel' # Channel File for x-domain communication
       status     : true # check the login status upon init?
       cookie     : true # set sessions cookies to allow your server to access the session?
@@ -49,9 +51,19 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
     offer: (bookId) ->
       ensureInit -> FB.api '/me/lendabooktest:offer', 'post', {book: "http://www.lendabook.org/og/books/"+bookId}, (response)->
         #Handle response
-    like: (bookId) ->
+    like: (bookId, callbacks) ->
       ensureInit -> FB.api '/me/og.likes', 'post', {object: "http://www.lendabook.org/og/books/"+bookId}, (response) ->
-        alert(response)
+        #Handle error
+        callbacks.success(response)
+    unlike: (likeId, callbacks) ->
+      ensureInit -> FB.api likeId, 'delete', (response) ->
+        #Handle error
+        callbacks.success(response)
+    getLikedBooks: (callback)->
+      ensureInit -> FB.api '/me/og.likes?fields=data&app_id_filter='+appId, (queryResult) ->
+        result = {}
+        result[elem.data.object.url] = elem.id for elem in queryResult.data
+        callback result
 
   # Return service
   return service

@@ -28,7 +28,7 @@ block content
           div.hidden
             li(id='book-item')
               .span12.clearfix
-                .row
+                .row.book
                   .span10
                     div.pull-left(class="imageTag", style="width: 200px; text-align: center; margin-bottom: 10px;")
                     h4
@@ -39,7 +39,8 @@ block content
                     h5(style='display: inline;') ISBN: 
                       span(class='isbn')
                     p(class='description')
-                    a.like(href="#") Gefällt mir
+                    a.like(href="#", style="display: none") Gefällt mir
+                    a.unlike(href="#", style="display: none") Gefällt mir nicht mehr
                   .span2
                     .lend.pull-right
                       .lenderId(style="display: none;")

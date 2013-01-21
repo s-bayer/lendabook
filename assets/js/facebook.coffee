@@ -48,7 +48,7 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
           to: lenderId
     offer: (bookId) ->
       ensureInit -> FB.api '/me/lendabooktest:offer', 'post', {book: "http://www.lendabook.org/og/books/"+bookId}, (response)->
-          alert(response)
+          alert(JSON.stringify(response))
 
   # Return service
   return service

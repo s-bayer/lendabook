@@ -27,7 +27,7 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', ($scope, 
       # send book info via ajax
       $http.post("/books", {book: book}).
         success( (data, status) ->
-          alert(data)
+          Facebook.offer data.ETag.id
         ).
         error( (data, status) ->
           # TODO SB better error handling

@@ -50,10 +50,20 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
     getUser: (id,callback) ->
       ensureInit -> FB.api '/'+id, callback
     lendingRequest: (bookId, lenderId) ->
-      ensureInit -> FB.ui
-          method: 'send'
-          link: 'http://www.lendabook.org/og/books/'+ bookId
-          to: lenderId
+      ensureInit -> FB.ui {
+        method: 'send'
+        link: 'http://www.lendabook.org/og/books/'+ bookId
+        to: lenderId
+      }, (response) ->
+        if(!response?)
+          #User cancelled the dialog
+        else if(!response.success? || !response.success)
+          #Error
+          alert("Error: "+JSON.stringify(response))
+        else
+          #Success, register opengraph action for borrowing
+          FB.api '/me/lendabooktest:borrow', 'post', {book: "http://www.lendabook.org/og/books/"+bookId}, (response) ->
+            displayIfError(response)
     offer: (bookId) ->
       ensureInit -> FB.api '/me/lendabooktest:offer', 'post', {book: "http://www.lendabook.org/og/books/"+bookId}, (response)->
         displayIfError(response)

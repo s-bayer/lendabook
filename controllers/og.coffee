@@ -9,6 +9,16 @@ exports.book = (req,res) ->
     else
       res.json(404, {error: "Book not found"})
 
+exports.bookauthor = (req,res) ->
+  book = Book.findById req.params.book, (err,book) ->
+    if err
+      res.json(404, {error: "Book not found"})
+    else if book?
+      res.render 'og/bookauthor', {book}
+    else
+      res.json(404, {error: "Book not found"})
+
+
 ###exports.bookimage = (req,res) ->
   book = Book.findById req.params.book, (err,book) ->
     if err

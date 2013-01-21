@@ -44,6 +44,7 @@ app.get '/channel', routes.fbchannel
 
 og = require('./controllers/og.js')
 app.get '/og/books/:book', og.book
+app.get '/og/books/:book/author', og.bookauthor
 #app.get '/og/books/:book/image', og.bookimage
 
 books = require('./controllers/book.js')

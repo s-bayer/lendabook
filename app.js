@@ -59,6 +59,8 @@
 
   app.get('/og/books/:book', og.book);
 
+  app.get('/og/books/:book/author', og.bookauthor);
+
   books = require('./controllers/book.js');
 
   app.get('/books', books.list);

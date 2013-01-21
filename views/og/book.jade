@@ -1,12 +1,13 @@
 !!!
 html
-  head
+  head(prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# book: http://ogp.me/ns/book#")
     meta(property="fb:app_id", content="516801898340306")
     meta(property="og:type", content="book")
     meta(property="og:title", content=book.title)
     meta(property="og:url", content="http://www.lendabook.org/og/books/"+book._id)
     meta(property="og:image", content=book.image)
     meta(property="og:description", content=book.description)
-    meta(property="og:author", content=book.author)
+    meta(property="og:author", content="http://www.lendabook.org/og/books/"+book._id+"/author")
     meta(property="og:isbn", content=book.isbn)
+    meta(property="og:site_name", content="Lend a book")
   body

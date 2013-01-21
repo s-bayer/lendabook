@@ -23,6 +23,25 @@
     });
   };
 
+  exports.bookauthor = function(req, res) {
+    var book;
+    return book = Book.findById(req.params.book, function(err, book) {
+      if (err) {
+        return res.json(404, {
+          error: "Book not found"
+        });
+      } else if (book != null) {
+        return res.render('og/bookauthor', {
+          book: book
+        });
+      } else {
+        return res.json(404, {
+          error: "Book not found"
+        });
+      }
+    });
+  };
+
   /*exports.bookimage = (req,res) ->
     book = Book.findById req.params.book, (err,book) ->
       if err

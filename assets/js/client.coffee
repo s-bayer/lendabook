@@ -43,7 +43,7 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', ($scope, 
               $(elem).find(".borrowbtn").click () ->
                 Facebook.lendingRequest bookId, lender.id
               $(elem).find(".deletebtn").click () ->
-                books.delete(bookId)
+                books.remove(bookId)
               if lender.id==currentUser.id
                 $(elem).find(".borrowbtn").hide()
                 $(elem).find(".deletebtn").show()
@@ -51,25 +51,28 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', ($scope, 
                 $(elem).find(".deletebtn").hide()
                 $(elem).find(".borrowbtn").show()
 
-    add: (book) ->
+    add: (book, callback) ->
       # send book info via ajax
       $http.post("/books", {book: book}).
         success( (data, status) ->
-          Facebook.offer data.ETag.id
+          $scope.newBook._id = data.ETag.id
+          Facebook.offer $scope.newBook._id
+          # update view
+          books.listjs.add prettifyBooks [$scope.newBook]
+          books.updateLenderInformation()
+          callback()
         ).
         error( (data, status) ->
           # TODO SB better error handling
           $scope.error += "error on POST: data: #{JSON.stringify(data)} status: #{status}"
           alert 'data: ' + JSON.stringify(data) + 'status: ' + status
+          callback()
         )
-      # update view
-      books.listjs.add prettifyBooks [$scope.newBook]
-      books.updateLenderInformation()
 
-    delete: (bookId) ->
+    remove: (bookId) ->
       $http.delete("/books/"+bookId).
         success( (data,status) ->
-          #Success
+          books.listjs.remove "bookId", bookId
         ).error( (data,status) ->
           # TODO SB better error handling
           $scope.error += "error on POST: data: #{JSON.stringify(data)} status: #{status}"
@@ -87,7 +90,8 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', ($scope, 
 
   $scope.addBook = () ->
     $scope.newBook.lender = $scope.user.id
-    books.add($scope.newBook)
+    books.add $scope.newBook, ->
+      $scope.newBook = {}
 
   $scope.OnTitleChange = () ->
 

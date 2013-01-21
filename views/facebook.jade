@@ -43,14 +43,15 @@ block content
                     a.like(href="#", style="display: none") Gefällt mir
                     a.unlike(href="#", style="display: none") Gefällt mir nicht mehr
                   .span2
-                    .lend.pull-right
+                    .pull-right
                       .lenderId(style="display: none;")
                       .bookId(style="display: none;")
                       img.lenderImage.pull-right
                       br
                       span.lenderName.pull-right
                       br
-                      a.btn.btn-success.pull-right(href='#') Ausleihen
+                      a.btn.btn-success.pull-right.borrowbtn(href='#', style="display: none;") Ausleihen
+                      a.btn.btn-warning.pull-right.deletebtn(href='#', style="display: none;") Entfernen
                   .span12
                     hr
         p.lead Deine Bücher sammeln nur Staub? Verleihe sie an die Community.

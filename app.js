@@ -67,6 +67,8 @@
 
   app.post('/books', books.create);
 
+  app["delete"]('/books/:book', books["delete"]);
+
   process.on('SIGTERM', function() {
     console.log("Closing app...");
     return app.close();

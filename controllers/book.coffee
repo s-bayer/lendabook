@@ -17,3 +17,17 @@ exports.create = (req, res) ->
       id: "#{id}"
       uri: "http://#{req.header('host')}#{req.url}"
       type: "book"
+
+exports.delete = (req, res) ->
+  console.log("PAram: "+req.params.book)
+  Book.findById req.params.book, (err,book) ->
+    console.log("Err: "+err)
+    console.log("Book: "+book)
+    if err
+      res.json(404, {error: "Book not found"})
+    else if book?
+      book.remove()
+      res.json
+        success: true
+    else
+      res.json(404, {error: "Book not found"})

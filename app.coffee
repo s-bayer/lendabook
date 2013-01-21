@@ -49,7 +49,8 @@ app.get '/og/books/:book/author', og.bookauthor
 
 books = require('./controllers/book.js')
 app.get '/books', books.list
-app.post('/books', books.create);
+app.post '/books', books.create
+app.delete '/books/:book', books.delete
 # app.get('/books/:id', routes.book);
 
 # Do I really need the process.on and app.on functions

@@ -51,7 +51,7 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
         #Handle response
     like: (bookId) ->
       ensureInit -> FB.api '/me/og.likes', 'post', {object: "http://www.lendabook.org/og/books/"+bookId}, (response) ->
-        #handle the response
+        alert(response)
 
   # Return service
   return service

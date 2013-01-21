@@ -17,7 +17,8 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', ($scope, 
       $(".lend").each (index,elem) ->
         bookId = $(elem).children(".bookId").text()
         lenderId = $(elem).children(".lenderId").text()
-        $(elem).children(".fb-like").attr "data-href", "http://www.lendabook.org/og/books/"+bookId
+        $(elem).children(".like").click (elem) ->
+          Facebook.like(bookId)
         Facebook.getUser lenderId, (user)->
           $(elem).children(".lenderName").text(user.name)
           $(elem).children(".lenderImage").attr 'src', 'http://graph.facebook.com/'+lenderId+'/picture'

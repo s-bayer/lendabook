@@ -37,7 +37,9 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', ($scope, 
                   success: ->
                     $(elem).find(".unlike").hide()
                     $(elem).find(".like").show()
+            alert(lenderId)
             Facebook.getUser lenderId, (lender)->
+              alert(JSON.stringify(lender))
               $(elem).find(".lenderName").text(lender.name)
               $(elem).find(".lenderImage").attr 'src', 'http://graph.facebook.com/'+lender.id+'/picture'
               $(elem).find(".borrowbtn").click () ->

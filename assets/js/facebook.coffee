@@ -44,13 +44,16 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
         callback()
     ensureLoggedIn: (callback) ->
       service.ensureInit ->
-        FB.login (response) ->
-          if response.authResponse
-            #Success
-            callback()
-          else
-            alert("Du musst die Anwendung akzeptieren, um diese Funktion auszuführen.")
-        , {scope: 'publish_actions'}
+        if !fbLoggedIn
+          FB.login (response) ->
+            if response.authResponse
+              fbLoggedIn = true
+              callback()
+            else
+              alert("Du musst die Anwendung akzeptieren, um diese Funktion auszuführen.")
+          , {scope: 'publish_actions'}
+        else
+          callback()
     getCurrentUser: (callback) ->
       service.ensureInit -> FB.api '/me', callback
     getUser: (id,callback) ->

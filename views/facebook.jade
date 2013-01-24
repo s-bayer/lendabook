@@ -56,7 +56,7 @@ block content
                     hr
         p.lead Deine Bücher sammeln nur Staub? Verleihe sie an die Community.
           br
-          a.btn(href="#addBook", role="button", data-toggle="modal") Buch eintragen
+          a.btn(href="#addBook", role="button", ng-click="addBookModal()") Buch eintragen
         #addBook.modal.hide.fade(role="dialog", aria-hidden="true")
           .modal-header
             button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;

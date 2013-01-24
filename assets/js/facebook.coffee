@@ -4,22 +4,6 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
   appId = '516801898340306'
   appNamespace = 'lend-it'
 
-  fbApiInit = false
-  fbLoggedIn = false
-  ensureInit = (callback) ->
-    if(!fbApiInit || !FB?)
-      setTimeout((()->ensureInit(callback)), 50)
-    else if callback?
-      callback()
-  ensureLoggedIn = (callback) ->
-    ensureInit ->
-      FB.login (response) ->
-        if response.authResponse
-          #Success
-          callback()
-        else
-          alert("Du musst die Anwendung akzeptieren, um diese Funktion auszuführen.")
-
   # Init facebook
   window.fbAsyncInit = () ->
     # init the FB JS SDK
@@ -49,13 +33,31 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
     else if(response.error?)
       alert "Error: "+JSON.stringify(response.error)
 
+
+  fbApiInit = false
+  fbLoggedIn = false
+
   service = 
+    ensureInit: (callback) ->
+      if(!fbApiInit || !FB?)
+        setTimeout((()->service.ensureInit(callback)), 50)
+      else if callback?
+        callback()
+    ensureLoggedIn: (callback) ->
+      service.ensureInit ->
+        FB.login (response) ->
+          if response.authResponse
+            #Success
+            callback()
+          else
+            alert("Du musst die Anwendung akzeptieren, um diese Funktion auszuführen.")
+        , {scope: 'publish_actions'}
     getCurrentUser: (callback) ->
-      ensureInit -> FB.api '/me', callback
+      service.ensureInit -> FB.api '/me', callback
     getUser: (id,callback) ->
-      ensureLoggedIn -> FB.api '/'+id, callback
+      service.ensureLoggedIn -> FB.api '/'+id, callback
     lendingRequest: (bookId, lenderId) ->
-      ensureLoggedIn -> FB.ui {
+      service.ensureLoggedIn -> FB.ui {
         method: 'send'
         link: 'http://www.lendabook.org/books/'+ bookId
         to: lenderId
@@ -70,18 +72,18 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
           FB.api '/me/'+appNamespace+':borrow', 'post', {book: "http://www.lendabook.org/books/"+bookId}, (response) ->
             displayIfError(response)
     offer: (bookId) ->
-      ensureLoggedIn -> FB.api '/me/'+appNamespace+':offer', 'post', {book: "http://www.lendabook.org/books/"+bookId}, (response)->
+      service.ensureLoggedIn -> FB.api '/me/'+appNamespace+':offer', 'post', {book: "http://www.lendabook.org/books/"+bookId}, (response)->
         displayIfError(response)
     like: (bookId, callbacks) ->
-      ensureLoggedIn -> FB.api '/me/og.likes', 'post', {object: "http://www.lendabook.org/books/"+bookId}, (response) ->
+      service.ensureLoggedIn -> FB.api '/me/og.likes', 'post', {object: "http://www.lendabook.org/books/"+bookId}, (response) ->
         displayIfError(response)
         callbacks.success(response)
     unlike: (likeId, callbacks) ->
-      ensureLoggedIn -> FB.api likeId, 'delete', (response) ->
+      service.ensureLoggedIn -> FB.api likeId, 'delete', (response) ->
         displayIfError(response)
         callbacks.success(response)
     getLikedBooks: (callback)->
-      ensureInit ->
+      service.ensureInit ->
         if fbLoggedIn
           FB.api '/me/og.likes?fields=data&app_id_filter='+appId, (queryResult) ->
             displayIfError(queryResult)

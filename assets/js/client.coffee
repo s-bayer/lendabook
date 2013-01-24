@@ -86,6 +86,10 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', ($scope, 
 
   # TODO SB descriptions should not be to long or shortened client-side
 
+  $scope.addBookModal = () ->
+    Facebook.ensureLoggedIn ->
+      $('#addBook').modal 'show'
+
   $scope.addBook = () ->
     $scope.newBook.lender = $scope.user.id
     $scope.newBook.lenderName = $scope.user.first_name

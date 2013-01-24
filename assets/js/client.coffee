@@ -56,8 +56,12 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', ($scope, 
         success( (data, status) ->
           $scope.newBook._id = data.ETag.id
           Facebook.offer $scope.newBook._id, (err)->
-            books.remove data.ETag.id
-            alert "Eintragen des Buches fehlgeschlagen. Ist das Coverbild korrekt gesetzt?"
+            #TODO Replace following block by the following commented block
+            books.listjs.add prettifyBooks [$scope.newBook]
+            books.updateLenderInformation()
+            callback()
+            #books.remove data.ETag.id
+            #alert "Eintragen des Buches fehlgeschlagen. Ist das Coverbild korrekt gesetzt?"
           , () -> #Success
             books.listjs.add prettifyBooks [$scope.newBook]
             books.updateLenderInformation()

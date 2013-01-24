@@ -76,7 +76,8 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
         else
           #Success, register opengraph action for borrowing
           FB.api '/me/'+appNamespace+':borrow', 'post', {book: "http://www.lendabook.org/books/"+bookId}, (response) ->
-            displayIfError(response)
+            #TODO Enable following block again
+            #displayIfError(response)
     offer: (bookId, errorhandler, successhandler) ->
       service.ensureLoggedIn -> FB.api '/me/'+appNamespace+':offer', 'post', {book: "http://www.lendabook.org/books/"+bookId}, (response)->
         handleIfError(response,errorhandler)

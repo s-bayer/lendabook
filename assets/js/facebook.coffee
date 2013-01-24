@@ -77,9 +77,10 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
           #Success, register opengraph action for borrowing
           FB.api '/me/'+appNamespace+':borrow', 'post', {book: "http://www.lendabook.org/books/"+bookId}, (response) ->
             displayIfError(response)
-    offer: (bookId, errorhandler) ->
+    offer: (bookId, errorhandler, successhandler) ->
       service.ensureLoggedIn -> FB.api '/me/'+appNamespace+':offer', 'post', {book: "http://www.lendabook.org/books/"+bookId}, (response)->
         handleIfError(response,errorhandler)
+        successhandler()
     like: (bookId, callbacks) ->
       service.ensureLoggedIn -> FB.api '/me/og.likes', 'post', {object: "http://www.lendabook.org/books/"+bookId}, (response) ->
         displayIfError(response)

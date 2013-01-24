@@ -58,10 +58,10 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', ($scope, 
           Facebook.offer $scope.newBook._id, (err)->
             books.remove data.ETag.id
             alert "Eintragen des Buches fehlgeschlagen. Ist das Coverbild korrekt gesetzt?"
-          # update view
-          books.listjs.add prettifyBooks [$scope.newBook]
-          books.updateLenderInformation()
-          callback()
+          , () -> #Success
+            books.listjs.add prettifyBooks [$scope.newBook]
+            books.updateLenderInformation()
+            callback()
         ).
         error( (data, status) ->
           # TODO SB better error handling

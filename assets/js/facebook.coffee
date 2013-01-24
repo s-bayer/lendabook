@@ -34,6 +34,10 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
     if(!response? || response.error?)
       callback(response)
 
+  handleIfError = (response, callback) ->
+    if(response? && !response.error?)
+      callback(response)
+
   displayIfError = (response) ->
     if(!response?)
       alert "Error: No response"
@@ -81,7 +85,7 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
     offer: (bookId, errorhandler, successhandler) ->
       service.ensureLoggedIn -> FB.api '/me/'+appNamespace+':offer', 'post', {book: "http://www.lendabook.org/books/"+bookId}, (response)->
         handleIfError(response,errorhandler)
-        successhandler()
+        handleIfNoError(successhandler)
     like: (bookId, callbacks) ->
       service.ensureLoggedIn -> FB.api '/me/og.likes', 'post', {object: "http://www.lendabook.org/books/"+bookId}, (response) ->
         displayIfError(response)

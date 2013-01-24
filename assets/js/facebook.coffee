@@ -4,6 +4,9 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
   appId = '516801898340306'
   appNamespace = 'lend-it'
 
+  fbApiInit = false
+  fbLoggedIn = false
+
   # Init facebook
   window.fbAsyncInit = () ->
     # init the FB JS SDK
@@ -32,10 +35,6 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
       alert "Error: No response"
     else if(response.error?)
       alert "Error: "+JSON.stringify(response.error)
-
-
-  fbApiInit = false
-  fbLoggedIn = false
 
   service = 
     ensureInit: (callback) ->

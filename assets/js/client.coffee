@@ -37,21 +37,17 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', ($scope, 
                   success: ->
                     $(elem).find(".unlike").hide()
                     $(elem).find(".like").show()
-            alert(lenderId)
-            Facebook.getUser lenderId, (lender)->
-              alert(JSON.stringify(lender))
-              $(elem).find(".lenderName").text(lender.name)
-              $(elem).find(".lenderImage").attr 'src', 'http://graph.facebook.com/'+lenderId+'/picture'
-              $(elem).find(".borrowbtn").click () ->
-                Facebook.lendingRequest bookId, lenderId
-              $(elem).find(".deletebtn").click () ->
-                books.remove(bookId)
-              if lenderId==currentUser.id
-                $(elem).find(".borrowbtn").hide()
-                $(elem).find(".deletebtn").show()
-              else
-                $(elem).find(".deletebtn").hide()
-                $(elem).find(".borrowbtn").show()
+            $(elem).find(".lenderImage").attr 'src', 'http://graph.facebook.com/'+lenderId+'/picture'
+            $(elem).find(".borrowbtn").click () ->
+              Facebook.lendingRequest bookId, lenderId
+            $(elem).find(".deletebtn").click () ->
+              books.remove(bookId)
+            if lenderId==currentUser.id
+              $(elem).find(".borrowbtn").hide()
+              $(elem).find(".deletebtn").show()
+            else
+              $(elem).find(".deletebtn").hide()
+              $(elem).find(".borrowbtn").show()
 
     add: (book, callback) ->
       # send book info via ajax
@@ -92,6 +88,7 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', ($scope, 
 
   $scope.addBook = () ->
     $scope.newBook.lender = $scope.user.id
+    $scope.newBook.lenderName = $scope.user.first_name
     books.add $scope.newBook, ->
       $scope.newBook = {}
 

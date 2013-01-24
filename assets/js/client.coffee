@@ -4,7 +4,7 @@ unless Array::filter
 
 # needed to work with minification
 window.bookapp = angular.module 'bookapp', []
-window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', ($scope, $http, Facebook) ->
+window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', 'BooksServer', ($scope, $http, Facebook, BooksServer) ->
 
   books = 
     listjs:(() -> 
@@ -42,7 +42,7 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', ($scope, 
             $(elem).find(".borrowbtn").click () ->
               Facebook.lendingRequest bookId, lenderId
             $(elem).find(".deletebtn").click () ->
-              books.remove(bookId)
+              booksServer.remove bookId
             if lenderId==currentUser.id
               $(elem).find(".borrowbtn").hide()
               $(elem).find(".deletebtn").show()
@@ -51,38 +51,20 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', ($scope, 
               $(elem).find(".borrowbtn").show()
 
     add: (book, callback) ->
-      # send book info via ajax
-      $http.post("/books", {book: book}).
-        success( (data, status) ->
+      booksServer.add book,
+        success: (data) ->
           $scope.newBook._id = data.ETag.id
           Facebook.offer $scope.newBook._id, (err)->
             #TODO Replace following block by the following commented block
             books.listjs.add prettifyBooks [$scope.newBook]
             books.updateLenderInformation()
             callback()
-            #books.remove data.ETag.id
+            #booksServer.remove data.ETag.id
             #alert "Eintragen des Buches fehlgeschlagen. Ist das Coverbild korrekt gesetzt?"
           , () -> #Success
             books.listjs.add prettifyBooks [$scope.newBook]
             books.updateLenderInformation()
             callback()
-        ).
-        error( (data, status) ->
-          # TODO SB better error handling
-          $scope.error += "error on POST: data: #{JSON.stringify(data)} status: #{status}"
-          alert 'ERROR!\n\ndata: ' + JSON.stringify(data) + 'status: ' + status
-          callback()
-        )
-
-    remove: (bookId) ->
-      $http.delete("/books/"+bookId).
-        success( (data,status) ->
-          books.listjs.remove "bookId", bookId
-        ).error( (data,status) ->
-          # TODO SB better error handling
-          $scope.error += "error on POST: data: #{JSON.stringify(data)} status: #{status}"
-          alert 'ERROR!\n\ndata: ' + JSON.stringify(data) + 'status: ' + status 
-        )
 
   prettifyBooks= (inputBooks) ->
     inputBooks.map (v) ->
@@ -110,27 +92,19 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', ($scope, 
   $scope.OnTitleChange = () ->
 
   # Load books via ajax and load them into list-js
-  $http.get("/books").
-    success( (data, status) ->
-      # TODO SB handle server side errors which return JSON
-      if(data.error)
-        alert 'Something went wrong. Please contact us.'
-      else
-        books.listjs.add prettifyBooks data
-        books.updateLenderInformation()
-    )
-    .
-    error( (data, status) ->
-      # TODO SB better error handling
-      alert 'ERROR!\n\ndata: ' + data + 'status: ' + status
-    )
+  BooksServer.getAllBooks
+    success: (data) ->
+      books.listjs.add prettifyBooks data
+      books.updateLenderInformation()      
+    error: (error) ->
+      alert("Error: "+error)
 
   # Load book data from google books
-  window.test = (data) ->
+  # window.test = (data) ->
     # alert JSON.stringify(data)
 
-  url = 'https://books.google.com/books?bibkeys=ISBN:0451526538&jscmd=viewapi&callback=window.test'
-  $http.jsonp(url)
+  # url = 'https://books.google.com/books?bibkeys=ISBN:0451526538&jscmd=viewapi&callback=window.test'
+  # $http.jsonp(url)
 
   Facebook.getCurrentUser (user) ->
     $scope.user = user

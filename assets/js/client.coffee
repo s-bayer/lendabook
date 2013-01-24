@@ -10,6 +10,7 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', ($scope, 
     listjs:(() -> 
       options = 
         item: 'book-item'
+        page: 6
       new List 'book-list', options
     )()
 
@@ -63,7 +64,7 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', ($scope, 
         error( (data, status) ->
           # TODO SB better error handling
           $scope.error += "error on POST: data: #{JSON.stringify(data)} status: #{status}"
-          alert 'data: ' + JSON.stringify(data) + 'status: ' + status
+          alert 'ERROR!\n\ndata: ' + JSON.stringify(data) + 'status: ' + status
           callback()
         )
 
@@ -74,7 +75,7 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', ($scope, 
         ).error( (data,status) ->
           # TODO SB better error handling
           $scope.error += "error on POST: data: #{JSON.stringify(data)} status: #{status}"
-          alert 'data: ' + JSON.stringify(data) + 'status: ' + status 
+          alert 'ERROR!\n\ndata: ' + JSON.stringify(data) + 'status: ' + status 
         )
 
   prettifyBooks= (inputBooks) ->
@@ -111,7 +112,7 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', ($scope, 
     .
     error( (data, status) ->
       # TODO SB better error handling
-      alert 'data: ' + data + 'status: ' + status
+      alert 'ERROR!\n\ndata: ' + data + 'status: ' + status
     )
 
   # Load book data from google books

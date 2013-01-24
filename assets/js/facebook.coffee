@@ -5,11 +5,20 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
   appNamespace = 'lend-it'
 
   fbApiInit = false
+  fbLoggedIn = false
   ensureInit = (callback) ->
     if(!fbApiInit || !FB?)
       setTimeout((()->ensureInit(callback)), 50)
     else if callback?
       callback()
+  ensureLoggedIn = (callback) ->
+    ensureInit ->
+      FB.login (response) ->
+        if response.authResponse
+          #Success
+          callback()
+        else
+          alert("Du musst die Anwendung akzeptieren, um diese Funktion auszuführen.")
 
   # Init facebook
   window.fbAsyncInit = () ->
@@ -22,11 +31,6 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
       xfbml      : true # parse XFBML tags on this page?
     FB.getLoginStatus (status) ->
       fbApiInit = true
-    FB.login (response) ->
-      if response.authResponse
-        #Success
-      else
-        alert "Not authorized"
 
   # Load Facebook plugin
   ((d, s, id) ->
@@ -49,10 +53,9 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
     getCurrentUser: (callback) ->
       ensureInit -> FB.api '/me', callback
     getUser: (id,callback) ->
-      alert("Request "+id)
-      ensureInit -> FB.api '/'+id, callback
+      ensureLoggedIn -> FB.api '/'+id, callback
     lendingRequest: (bookId, lenderId) ->
-      ensureInit -> FB.ui {
+      ensureLoggedIn -> FB.ui {
         method: 'send'
         link: 'http://www.lendabook.org/books/'+ bookId
         to: lenderId
@@ -67,22 +70,26 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
           FB.api '/me/'+appNamespace+':borrow', 'post', {book: "http://www.lendabook.org/books/"+bookId}, (response) ->
             displayIfError(response)
     offer: (bookId) ->
-      ensureInit -> FB.api '/me/'+appNamespace+':offer', 'post', {book: "http://www.lendabook.org/books/"+bookId}, (response)->
+      ensureLoggedIn -> FB.api '/me/'+appNamespace+':offer', 'post', {book: "http://www.lendabook.org/books/"+bookId}, (response)->
         displayIfError(response)
     like: (bookId, callbacks) ->
-      ensureInit -> FB.api '/me/og.likes', 'post', {object: "http://www.lendabook.org/books/"+bookId}, (response) ->
+      ensureLoggedIn -> FB.api '/me/og.likes', 'post', {object: "http://www.lendabook.org/books/"+bookId}, (response) ->
         displayIfError(response)
         callbacks.success(response)
     unlike: (likeId, callbacks) ->
-      ensureInit -> FB.api likeId, 'delete', (response) ->
+      ensureLoggedIn -> FB.api likeId, 'delete', (response) ->
         displayIfError(response)
         callbacks.success(response)
     getLikedBooks: (callback)->
-      ensureInit -> FB.api '/me/og.likes?fields=data&app_id_filter='+appId, (queryResult) ->
-        displayIfError(queryResult)
-        result = {}
-        result[elem.data.object.url] = elem.id for elem in queryResult.data
-        callback result
+      ensureInit ->
+        if fbLoggedIn
+          FB.api '/me/og.likes?fields=data&app_id_filter='+appId, (queryResult) ->
+            displayIfError(queryResult)
+            result = {}
+            result[elem.data.object.url] = elem.id for elem in queryResult.data
+            callback result
+        else
+          callback []
 
   # Return service
   return service

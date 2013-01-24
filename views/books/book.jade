@@ -12,4 +12,35 @@ html
     //meta(property="book:release_date", content="""")
     //meta(property="book:tag", content="")
     meta(property="og:site_name", content="Lend a book")
+
+    != js('client')
+    != js('facebook')
   body
+    .span12.clearfix
+      .row.book
+        .span2
+          div.pull-left(class="imageTag", style="width: 200px; text-align: center; margin-bottom: 10px;")
+            img(src=book.image, style='overflow: hidden; width: 100px', width='100')
+        .span8
+          h4
+            span(class='title')= book.title
+            br
+            small von 
+              span(class='author')= book.author
+          h5(style='display: inline;') ISBN: 
+            span(class='isbn')= book.isbn
+          p(class='description')= book.description
+          a.like(href="#", style="display: none") Gefällt mir
+          a.unlike(href="#", style="display: none") Gefällt mir nicht mehr
+        .span2
+          .pull-right
+            .lenderId(style="display: none;")
+            .bookId(style="display: none;")
+            img.lenderImage.pull-right
+            br
+            span.lenderName.pull-right
+            br
+            a.btn.btn-success.pull-right.borrowbtn(href='#', style="display: none;") Ausleihen
+            a.btn.btn-warning.pull-right.deletebtn(href='#', style="display: none;") Entfernen
+        .span12
+          hr

@@ -10,6 +10,7 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', ($scope, 
     listjs:(() -> 
       options = 
         item: 'book-item'
+        page: 6
       new List 'book-list', options
     )()
 

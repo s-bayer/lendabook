@@ -20,7 +20,7 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', ($scope, 
           $(".book").each (index,elem) ->
             bookId = $(elem).find(".bookId").text()
             lenderId = $(elem).find(".lenderId").text()
-            ogUrl = 'https://www.lendabook.org/books/'+bookId
+            ogUrl = 'http://www.lendabook.org/books/'+bookId
             if likedBooks[ogUrl]?
               $(elem).find(".like").hide()
               $(elem).find(".unlike").show()
@@ -119,7 +119,7 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', ($scope, 
   window.test = (data) ->
     # alert JSON.stringify(data)
 
-  url = 'http://books.google.com/books?bibkeys=ISBN:0451526538&jscmd=viewapi&callback=window.test'
+  url = 'https://books.google.com/books?bibkeys=ISBN:0451526538&jscmd=viewapi&callback=window.test'
   $http.jsonp(url)
 
   Facebook.getCurrentUser (user) ->

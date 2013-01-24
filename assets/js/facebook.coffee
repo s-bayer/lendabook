@@ -34,7 +34,7 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
     if(!response? || response.error?)
       callback(response)
 
-  handleIfError = (response, callback) ->
+  handleIfNoError = (response, callback) ->
     if(response? && !response.error?)
       callback(response)
 

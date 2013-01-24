@@ -1,4 +1,4 @@
-extends layouts/main
+extends layouts/fbmain
 
 block angular
   != js('client')
@@ -8,26 +8,11 @@ block meta
   meta(property="fb:app_id", content="516801898340306")
   meta(property="og:type", content="website")
   meta(property="og:title", content="Lend a book")
-  meta(property="og:url", content="http://www.lendabook.org")
+  meta(property="og:url", content="http://apps.facebook.com/lend-it")
   meta(property="og:image", content="http://www.lendabook.org/images/logo.png")
   meta(property="og:description", content="Du willst ein Buch lesen, es dir aber nicht kaufen? Leih es dir aus unserer Community aus.")
 
 block content
-  .navbar.navbar-fixed-top
-    .navbar-inner
-      .container
-        div(data-toggle="collapse", data-target=".nav-collapse")
-          a.btn.btn-navbar
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-        a.brand(href="#")
-          img.pull-left(src="/images/logo.png", style="height:30px; margin: -5px 10px -5px 0;")   
-          | Lend a book
-        .nav-collapse.collapse
-          ul.nav
-            li.active: a(href="/") Bücher
-            li: a(href="/impressum") Über uns
   .fb-like(style="float: left;", data-href="http://apps.facebook.com/lend-it", data-send="true", data-layout="box_count", data-width="450", data-show-faces="true", data-font="lucida grande")
   .container
     .row(ng-controller="BookCtrl")
@@ -58,7 +43,7 @@ block content
                     a.like(href="#", style="display: none") Gefällt mir
                     a.unlike(href="#", style="display: none") Gefällt mir nicht mehr
                   .span2
-                    .lend.pull-right
+                    .pull-right
                       .lenderId(style="display: none;")
                       .bookId(style="display: none;")
                       img.lenderImage.pull-right
@@ -71,7 +56,7 @@ block content
                     hr
         p.lead Deine Bücher sammeln nur Staub? Verleihe sie an die Community.
           br
-          a.btn(href="#addBook", role="button", data-toggle="modal") Buch eintragen
+          a.btn(href="#addBook", role="button", ng-click="addBookModal()") Buch eintragen
         #addBook.modal.hide.fade(role="dialog", aria-hidden="true")
           .modal-header
             button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;
@@ -95,4 +80,5 @@ block content
               img(style="overflow: hidden; width: 100px; top: 0px;", width="100", src="{{newBook.image}}")
           .modal-footer
             a(href="#", class="btn btn-primary", ng-click="addBook()", ng-disabled="addBookForm.$invalid", data-dismiss="modal") Buch eintragen
+
         {{$.errors}}

@@ -1,0 +1,53 @@
+extends layouts/main
+
+block angular
+  != js('client')
+  //- for livereload
+  script(type="text/javascript", src="/javascripts/client.js")
+
+block content
+  .navbar.navbar-fixed-top
+    .navbar-inner
+      .container
+        div(data-toggle="collapse", data-target=".nav-collapse")
+          a.btn.btn-navbar
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+        a.brand(href="#")
+          img.pull-left(src="/images/logo.png", style="height:30px; margin: -5px 10px -5px 0;")   
+          | Lend a book
+        .nav-collapse.collapse
+          ul.nav
+            li: a(href="/") Bücher
+            li.active: a(href="/impressum") Über uns
+  .container
+    h1.page-header Impressum
+    h2#about Wie entstand Lend a book?
+    p
+      | Dieser Prototyp einer Geschäftsidee entstand am 14. Januar 2013 beim 4 Hour Venture.
+    p
+      | Das 4 Hour Venture ist ein Workshop für Rapid Prototyping in Karlsruhe.
+    p
+      | Jedes teilnehmende Team entwickelt eine Geschäftsidee von Grund auf zu einem ersten Prototypen.
+      | Nach 4 Studnen wird das Ergebnis festgelegt und veröffentlicht.
+
+    h3 Diese Geschäftsidee wurde entwickelt von
+    ul
+      li Bayer Sebastian
+      li Lütjohann Dominic
+      li Meßmer Sebastian
+
+    h2 Inhaltliche Verantwortung
+    p
+      |Sebastian Meßmer
+      br
+      |Zimmer G101
+      br
+      |Klosterweg 28
+      br
+      |D-76131 Karlsruhe
+      br
+      |E-Mail: messmer -at- enspire-it.de
+    {{$.errors}}
+  .fb-like(data-href="http://apps.facebook.com/lend-it", data-send="true", data-layout="box_count", data-width="450", data-show-faces="true", data-font="lucida grande")

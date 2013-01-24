@@ -38,7 +38,7 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', ($scope, 
                   success: ->
                     $(elem).find(".unlike").hide()
                     $(elem).find(".like").show()
-            $(elem).find(".lenderImage").attr 'src', 'http://graph.facebook.com/'+lenderId+'/picture'
+            $(elem).find(".lenderImage").attr 'src', 'https://graph.facebook.com/'+lenderId+'/picture'
             $(elem).find(".borrowbtn").click () ->
               Facebook.lendingRequest bookId, lenderId
             $(elem).find(".deletebtn").click () ->
@@ -121,7 +121,7 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', ($scope, 
   window.test = (data) ->
     # alert JSON.stringify(data)
 
-  url = 'http://books.google.com/books?bibkeys=ISBN:0451526538&jscmd=viewapi&callback=window.test'
+  url = 'https://books.google.com/books?bibkeys=ISBN:0451526538&jscmd=viewapi&callback=window.test'
   $http.jsonp(url)
 
   Facebook.getCurrentUser (user) ->

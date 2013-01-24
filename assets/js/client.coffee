@@ -87,6 +87,10 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', ($scope, 
       v.bookId = v._id
       v
 
+  $scope.showMoreBooks = () ->
+    books.listjs.show(0,200)
+    $('#moreBooks').hide()
+
   # TODO SB descriptions should not be to long or shortened client-side
 
   $scope.addBookModal = () ->

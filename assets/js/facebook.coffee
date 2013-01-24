@@ -30,6 +30,10 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
       fjs.parentNode.insertBefore(js, fjs)
   )(document, 'script', 'facebook-jssdk')
 
+  handleIfError = (response, callback) ->
+    if(!response? || response.error?)
+      callback(response)
+
   displayIfError = (response) ->
     if(!response?)
       alert "Error: No response"
@@ -73,9 +77,9 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
           #Success, register opengraph action for borrowing
           FB.api '/me/'+appNamespace+':borrow', 'post', {book: "http://www.lendabook.org/books/"+bookId}, (response) ->
             displayIfError(response)
-    offer: (bookId) ->
+    offer: (bookId, errorhandler) ->
       service.ensureLoggedIn -> FB.api '/me/'+appNamespace+':offer', 'post', {book: "http://www.lendabook.org/books/"+bookId}, (response)->
-        displayIfError(response)
+        handleIfError(response,errorhandler)
     like: (bookId, callbacks) ->
       service.ensureLoggedIn -> FB.api '/me/og.likes', 'post', {object: "http://www.lendabook.org/books/"+bookId}, (response) ->
         displayIfError(response)

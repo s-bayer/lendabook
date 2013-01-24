@@ -4,6 +4,9 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
   appId = '516801898340306'
   appNamespace = 'lend-it'
 
+  fbApiInit = false
+  fbLoggedIn = false
+
   # Init facebook
   window.fbAsyncInit = () ->
     # init the FB JS SDK
@@ -33,10 +36,6 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
     else if(response.error?)
       alert "Error: "+JSON.stringify(response.error)
 
-
-  fbApiInit = false
-  fbLoggedIn = false
-
   service = 
     ensureInit: (callback) ->
       if(!fbApiInit || !FB?)
@@ -45,13 +44,16 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
         callback()
     ensureLoggedIn: (callback) ->
       service.ensureInit ->
-        FB.login (response) ->
-          if response.authResponse
-            #Success
-            callback()
-          else
-            alert("Du musst die Anwendung akzeptieren, um diese Funktion auszuführen.")
-        , {scope: 'publish_actions'}
+        if !fbLoggedIn
+          FB.login (response) ->
+            if response.authResponse
+              fbLoggedIn = true
+              callback()
+            else
+              alert("Du musst die Anwendung akzeptieren, um diese Funktion auszuführen.")
+          , {scope: 'publish_actions'}
+        else
+          callback()
     getCurrentUser: (callback) ->
       service.ensureInit -> FB.api '/me', callback
     getUser: (id,callback) ->

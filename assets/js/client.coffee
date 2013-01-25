@@ -26,12 +26,14 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', 'BooksSer
             #TODO Replace following block by the following commented block
             books.listjs.add prettifyBooks [$scope.newBook]
             updateAllBookPartials()
+            alert "Buch erfolgreich eingetragen."
             callback()
             #booksServer.remove data.ETag.id
             #alert "Eintragen des Buches fehlgeschlagen. Ist das Coverbild korrekt gesetzt?"
           , () -> #Success
             books.listjs.add prettifyBooks [$scope.newBook]
             updateAllBookPartials()
+            alert "Buch erfolgreich eingetragen."
             callback()
 
   prettifyBooks= (inputBooks) ->

@@ -28,7 +28,7 @@ window.bookapp.factory 'BooksServer', [ '$http', ($http) ->
         )
         .
         error( (data, status) ->
-          callError callbacks,data
+          callError data,callbacks
         )
 
     remove: (bookId, callbacks) ->

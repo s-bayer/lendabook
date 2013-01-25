@@ -8,7 +8,7 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
   fbLoggedIn = false
 
   # Init facebook
-  window.fbAsyncInit = () ->
+  window.fbAsyncInit = ->
     # init the FB JS SDK
     FB.init
       appId      : appId # App ID from the App Dashboard

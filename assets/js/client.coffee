@@ -4,7 +4,7 @@ unless Array::filter
 
 # needed to work with minification
 window.bookapp = angular.module 'bookapp', []
-window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', 'BooksServer', ($scope, $http, Facebook, BooksServer) ->
+window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', 'BooksServer', 'BookPartial', ($scope, $http, Facebook, BooksServer, BookPartial) ->
 
   books = 
     listjs:(() -> 
@@ -14,42 +14,6 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', 'BooksSer
       new List 'book-list', options
     )()
 
-    updateLenderInformation: () ->
-      Facebook.getCurrentUser (currentUser) ->
-        Facebook.getLikedBooks (likedBooks)->
-          $(".book").each (index,elem) ->
-            bookId = $(elem).find(".bookId").text()
-            lenderId = $(elem).find(".lenderId").text()
-            ogUrl = 'http://www.lendabook.org/books/'+bookId
-            if likedBooks[ogUrl]?
-              $(elem).find(".like").hide()
-              $(elem).find(".unlike").show()
-            else
-              $(elem).find(".unlike").hide()
-              $(elem).find(".like").show()
-            $(elem).find(".like").click () ->
-              Facebook.like bookId,
-                success: ->
-                  $(elem).find(".like").hide()
-                  $(elem).find(".unlike").show()
-            $(elem).find(".unlike").click () ->
-              Facebook.getLikedBooks (likedBooks) ->
-                Facebook.unlike likedBooks[ogUrl],
-                  success: ->
-                    $(elem).find(".unlike").hide()
-                    $(elem).find(".like").show()
-            $(elem).find(".lenderImage").attr 'src', 'https://graph.facebook.com/'+lenderId+'/picture'
-            $(elem).find(".borrowbtn").click () ->
-              Facebook.lendingRequest bookId, lenderId
-            $(elem).find(".deletebtn").click () ->
-              booksServer.remove bookId
-            if lenderId==currentUser.id
-              $(elem).find(".borrowbtn").hide()
-              $(elem).find(".deletebtn").show()
-            else
-              $(elem).find(".deletebtn").hide()
-              $(elem).find(".borrowbtn").show()
-
     add: (book, callback) ->
       booksServer.add book,
         success: (data) ->
@@ -57,13 +21,13 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', 'BooksSer
           Facebook.offer $scope.newBook._id, (err)->
             #TODO Replace following block by the following commented block
             books.listjs.add prettifyBooks [$scope.newBook]
-            books.updateLenderInformation()
+            BookPartial.updateAllBookPartials()
             callback()
             #booksServer.remove data.ETag.id
             #alert "Eintragen des Buches fehlgeschlagen. Ist das Coverbild korrekt gesetzt?"
           , () -> #Success
             books.listjs.add prettifyBooks [$scope.newBook]
-            books.updateLenderInformation()
+            BookPartial.updateAllBookPartials()
             callback()
 
   prettifyBooks= (inputBooks) ->
@@ -89,16 +53,12 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', 'BooksSer
     books.add $scope.newBook, ->
       $scope.newBook = {}
 
-  $scope.OnTitleChange = () ->
-
-  # Load books via ajax and load them into list-js
   BooksServer.getAllBooks
     success: (data) ->
       books.listjs.add prettifyBooks data
-      books.updateLenderInformation()      
-    error: (error) ->
-      alert("Error: "+error)
+      BookPartial.updateAllBookPartials()
 
+  # $scope.OnTitleChange = () ->
   # Load book data from google books
   # window.test = (data) ->
     # alert JSON.stringify(data)
@@ -109,5 +69,6 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', 'BooksSer
   Facebook.getCurrentUser (user) ->
     $scope.user = user
     $scope.$apply()
+
 ]
   

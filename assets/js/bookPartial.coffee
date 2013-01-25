@@ -36,13 +36,14 @@ window.bookapp.factory 'BookPartial', [ 'Facebook', 'BooksServer', (Facebook, Bo
             $(elem).find(".unlike").hide()
             $(elem).find(".like").show()
 
-  updateLenderArea = (bookId, lenderId, elem) ->
+  updateLenderArea = (bookId, lenderId, elem, removefunc) ->
     $(elem).find(".lenderImage").attr 'src', 'https://graph.facebook.com/'+lenderId+'/picture'
     Facebook.getCurrentUser (currentUser) ->
       $(elem).find(".borrowbtn").click () ->
         Facebook.lendingRequest bookId, lenderId
       $(elem).find(".deletebtn").click () ->
         BooksServer.remove bookId
+        removefunc bookId
       if lenderId==currentUser.id
         $(elem).find(".borrowbtn").hide()
         $(elem).find(".deletebtn").show()
@@ -50,23 +51,23 @@ window.bookapp.factory 'BookPartial', [ 'Facebook', 'BooksServer', (Facebook, Bo
         $(elem).find(".deletebtn").hide()
         $(elem).find(".borrowbtn").show()    
 
-  doUpdateBookPartial = (elem, likedBooks) ->
+  doUpdateBookPartial = (elem, likedBooks, removefunc) ->
     bookId = $(elem).find(".bookId").text()
     lenderId = $(elem).find(".lender").text()
     ogUrl = 'http://www.lendabook.org/books/'+bookId
     updateLikeButton likedBooks[ogUrl]?, elem
-    updateLenderArea bookId, lenderId, elem
+    updateLenderArea bookId, lenderId, elem, removefunc
 
 
   service = 
-    updateBookPartial: (elem) ->
+    updateBookPartial: (elem,removefunc) ->
       Facebook.getLikedBooks (likedBooks)->
-        doUpdateBookPartial elem, likedBooks
+        doUpdateBookPartial elem, likedBooks, removefunc
 
-    updateAllBookPartials: ->
+    updateAllBookPartials: (removefunc)->
       Facebook.getLikedBooks (likedBooks)->
         $(".book").each (index,elem) ->
-          doUpdateBookPartial elem, likedBooks
+          doUpdateBookPartial elem, likedBooks, removefunc
 
   # Return service
   return service

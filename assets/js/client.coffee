@@ -6,6 +6,10 @@ unless Array::filter
 window.bookapp = angular.module 'bookapp', []
 window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', 'BooksServer', 'BookPartial', ($scope, $http, Facebook, BooksServer, BookPartial) ->
 
+  updateAllBookPartials = ->
+    BookPartial.updateAllBookPartials (bookIdToRemoveFromList)->
+      books.listjs.remove "bookId", bookIdToRemoveFromList
+
   books = 
     listjs:(() -> 
       options = 
@@ -21,13 +25,13 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', 'BooksSer
           Facebook.offer $scope.newBook._id, (err)->
             #TODO Replace following block by the following commented block
             books.listjs.add prettifyBooks [$scope.newBook]
-            BookPartial.updateAllBookPartials()
+            updateAllBookPartials()
             callback()
             #booksServer.remove data.ETag.id
             #alert "Eintragen des Buches fehlgeschlagen. Ist das Coverbild korrekt gesetzt?"
           , () -> #Success
             books.listjs.add prettifyBooks [$scope.newBook]
-            BookPartial.updateAllBookPartials()
+            updateAllBookPartials()
             callback()
 
   prettifyBooks= (inputBooks) ->
@@ -55,7 +59,7 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', 'BooksSer
   BooksServer.getAllBooks
     success: (data) ->
       books.listjs.add prettifyBooks data
-      BookPartial.updateAllBookPartials()
+      updateAllBookPartials()
 
   # $scope.OnTitleChange = () ->
   # Load book data from google books

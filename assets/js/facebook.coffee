@@ -85,7 +85,7 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
     offer: (bookId, errorhandler, successhandler) ->
       service.ensureLoggedIn -> FB.api '/me/'+appNamespace+':offer', 'post', {book: "http://www.lendabook.org/books/"+bookId}, (response)->
         handleIfError(response,errorhandler)
-        handleIfNoError(successhandler)
+        handleIfNoError(response,successhandler)
     like: (bookId, callbacks) ->
       service.ensureLoggedIn -> FB.api '/me/og.likes', 'post', {object: "http://www.lendabook.org/books/"+bookId}, (response) ->
         displayIfError(response)

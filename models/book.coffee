@@ -9,7 +9,7 @@ bookSchema = mongoose.Schema
   isbn: String
   location: String
   lender: String
-  lenerName: String
+  lenderName: String
   image: String
   description: String
 

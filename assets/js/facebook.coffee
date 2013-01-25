@@ -75,6 +75,10 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
           , {scope: 'publish_actions'}
         else
           callback()
+    onLoginStatusChange: (callback) ->
+      service.ensureInit ->
+        FB.Event.subscribe 'auth.authResponseChange', callback
+        FB.getLoginStatus callback
     getCurrentUser: (callback) ->
       service.ensureInit -> FB.api '/me', callback
     getUser: (id,callback) ->

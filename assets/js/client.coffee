@@ -71,9 +71,10 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', 'BooksSer
   # url = 'https://books.google.com/books?bibkeys=ISBN:0451526538&jscmd=viewapi&callback=window.test'
   # $http.jsonp(url)
 
-  Facebook.getCurrentUser (user) ->
-    $scope.user = user
-    $scope.$apply()
+  Facebook.onLoginStatusChange (status) ->
+    Facebook.getCurrentUser (user) ->
+      $scope.user = user
+      $scope.$apply()
 
 ]
   

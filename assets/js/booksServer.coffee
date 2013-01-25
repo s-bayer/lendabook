@@ -34,9 +34,9 @@ window.bookapp.factory 'BooksServer', [ '$http', ($http) ->
     remove: (bookId, callbacks) ->
       $http.delete("/books/"+bookId).
         success( (data,status) ->
-          callSuccess callbacks,data
+          callSuccess data,callbacks
         ).error( (data,status) ->
-          callError callbacks,data
+          callError data,callbacks
         )
 
     add: (book, callbacks) ->

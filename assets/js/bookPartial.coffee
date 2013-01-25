@@ -1,5 +1,5 @@
 # needed to work with minification
-window.bookapp.factory 'BookPartial', [ 'Facebook', (Facebook) ->
+window.bookapp.factory 'BookPartial', [ 'Facebook', 'BooksServer', (Facebook, BooksServer) ->
 
   #The callbacks parameter should be a JSON object with two entries: success and error
   # success: function(result of request)

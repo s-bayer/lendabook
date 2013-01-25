@@ -50,7 +50,7 @@ window.bookapp.factory 'BookPartial', [ 'Facebook', (Facebook) ->
         $(elem).find(".deletebtn").hide()
         $(elem).find(".borrowbtn").show()    
 
-  _updateBookPartial: (elem, likedBooks) ->
+  doUpdateBookPartial = (elem, likedBooks) ->
     bookId = $(elem).find(".bookId").text()
     lenderId = $(elem).find(".lenderId").text()
     ogUrl = 'http://www.lendabook.org/books/'+bookId
@@ -61,12 +61,12 @@ window.bookapp.factory 'BookPartial', [ 'Facebook', (Facebook) ->
   service = 
     updateBookPartial: (elem) ->
       Facebook.getLikedBooks (likedBooks)->
-        _updateBookPartial elem, likedBooks
+        doUpdateBookPartial elem, likedBooks
 
     updateAllBookPartials: ->
       Facebook.getLikedBooks (likedBooks)->
         $(".book").each (index,elem) ->
-          _updateBookPartial elem, likedBooks
+          doUpdateBookPartial elem, likedBooks
 
   # Return service
   return service

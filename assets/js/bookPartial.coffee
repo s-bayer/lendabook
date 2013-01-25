@@ -42,7 +42,7 @@ window.bookapp.factory 'BookPartial', [ 'Facebook', (Facebook) ->
       $(elem).find(".borrowbtn").click () ->
         Facebook.lendingRequest bookId, lenderId
       $(elem).find(".deletebtn").click () ->
-        booksServer.remove bookId
+        BooksServer.remove bookId
       if lenderId==currentUser.id
         $(elem).find(".borrowbtn").hide()
         $(elem).find(".deletebtn").show()

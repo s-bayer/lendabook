@@ -57,7 +57,8 @@ block content
                       a.btn.btn-warning.pull-right.deletebtn(href='#', style="display: none;") Entfernen
                   .span12
                     hr
-          a.btn Mehr Anzeigen
+          p.span12(id='moreBooks', style='margin-bottom: 2em;', ng-click='showMoreBooks()')
+            a.btn Mehr Anzeigen
         p.lead Deine Bücher sammeln nur Staub? Verleihe sie an die Community.
           br
           a.btn(href="#addBook", role="button", ng-click="addBookModal()") Buch eintragen

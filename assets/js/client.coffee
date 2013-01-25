@@ -53,10 +53,11 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', 'BooksSer
       $('#addBook').modal 'show'
 
   $scope.addBook = () ->
-    $scope.newBook.lender = $scope.user.id
-    $scope.newBook.lenderName = $scope.user.first_name
-    books.add $scope.newBook, ->
-      $scope.newBook = {}
+    Facebook.getCurrentUser (user) ->
+      $scope.newBook.lender = user.id
+      $scope.newBook.lenderName = user.first_name
+      books.add $scope.newBook, ->
+        $scope.newBook = {}
 
   BooksServer.getAllBooks
     success: (data) ->

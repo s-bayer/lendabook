@@ -5,7 +5,8 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
   appNamespace = 'lend-it'
 
   fbApiInit = false
-  fbLoggedIn = false
+  fbUserAvailable = false
+  fbAppAuthorized = false
 
   # Init facebook
   window.fbAsyncInit = ->
@@ -16,8 +17,21 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
       status     : true # check the login status upon init?
       cookie     : true # set sessions cookies to allow your server to access the session?
       xfbml      : true # parse XFBML tags on this page?
-    FB.getLoginStatus (status) ->
+
+    handleAuthChange = (response) ->
       fbApiInit = true
+      if response.status=='connected'
+        fbUserAvailable = true
+        fbAppAuthorized = true
+      else if response.status=='not_authorized'
+        fbUserAvailable = true
+        fbAppAuthorized = false
+      else if response.status=='unknown'
+        fbUserAvailable = false
+        fbAppAuthorized = false
+    FB.Event.subscribe 'auth.authResponseChange', handleAuthChange
+    FB.getLoginStatus handleAuthChange
+
 
   # Load Facebook plugin
   ((d, s, id) ->
@@ -52,10 +66,9 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
         callback()
     ensureLoggedIn: (callback) ->
       service.ensureInit ->
-        if !fbLoggedIn
+        if !fbAppAuthorized
           FB.login (response) ->
             if response.authResponse
-              fbLoggedIn = true
               callback()
             else
               alert("Du musst die Anwendung akzeptieren, um diese Funktion auszuführen.")
@@ -66,6 +79,8 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
       service.ensureInit -> FB.api '/me', callback
     getUser: (id,callback) ->
       service.ensureLoggedIn -> FB.api '/'+id, callback
+    getProfilePicture: (userId, callback) ->
+      callback('https://graph.facebook.com/'+userId+'/picture')
     lendingRequest: (bookId, lenderId) ->
       service.ensureLoggedIn -> FB.ui {
         method: 'send'
@@ -96,7 +111,7 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
         callbacks.success(response)
     getLikedBooks: (callback)->
       service.ensureInit ->
-        if fbLoggedIn
+        if fbAppAuthorized
           FB.api '/me/og.likes?fields=data&app_id_filter='+appId, (queryResult) ->
             displayIfError(queryResult)
             result = {}

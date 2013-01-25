@@ -17,7 +17,10 @@ window.bookapp.factory 'BookPartial', [ 'Facebook', 'BooksServer', (Facebook, Bo
     else
       alert "Error: "+JSON.stringify(data)
 
+  getBookOgUrl = (bookId) -> 'http://www.lendabook.org/books/'+bookId
+
   updateLikeButton = (bookLiked, elem) ->
+    bookId = $(elem).find(".bookId").text()
     if bookLiked
       $(elem).find(".like").hide()
       $(elem).find(".unlike").show()
@@ -31,13 +34,16 @@ window.bookapp.factory 'BookPartial', [ 'Facebook', 'BooksServer', (Facebook, Bo
           $(elem).find(".unlike").show()
     $(elem).find(".unlike").click () ->
       Facebook.getLikedBooks (likedBooks) ->
-        Facebook.unlike likedBooks[ogUrl],
+        Facebook.unlike likedBooks[getBookOgUrl(bookId)],
           success: ->
             $(elem).find(".unlike").hide()
             $(elem).find(".like").show()
 
-  updateLenderArea = (bookId, lenderId, elem, removefunc) ->
-    $(elem).find(".lenderImage").attr 'src', 'https://graph.facebook.com/'+lenderId+'/picture'
+  updateLenderArea = (elem, removefunc) ->
+    bookId = $(elem).find(".bookId").text()
+    lenderId = $(elem).find(".lender").text()
+    Facebook.getProfilePicture lenderId, (pictureUrl)->
+      $(elem).find(".lenderImage").attr 'src', pictureUrl
     Facebook.getCurrentUser (currentUser) ->
       $(elem).find(".borrowbtn").click () ->
         Facebook.lendingRequest bookId, lenderId
@@ -53,10 +59,8 @@ window.bookapp.factory 'BookPartial', [ 'Facebook', 'BooksServer', (Facebook, Bo
 
   doUpdateBookPartial = (elem, likedBooks, removefunc) ->
     bookId = $(elem).find(".bookId").text()
-    lenderId = $(elem).find(".lender").text()
-    ogUrl = 'http://www.lendabook.org/books/'+bookId
-    updateLikeButton likedBooks[ogUrl]?, elem
-    updateLenderArea bookId, lenderId, elem, removefunc
+    updateLikeButton likedBooks[getBookOgUrl(bookId)]?, elem
+    updateLenderArea elem, removefunc
 
 
   service = 

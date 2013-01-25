@@ -15,7 +15,7 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', 'BooksSer
     )()
 
     add: (book, callback) ->
-      booksServer.add book,
+      BooksServer.add book,
         success: (data) ->
           $scope.newBook._id = data.ETag.id
           Facebook.offer $scope.newBook._id, (err)->

@@ -1,6 +1,6 @@
 !!!
 html(ng-app='bookapp')
-  head
+  head(prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# book: http://ogp.me/ns/book#")
     title= title
     //- Livereload (removed in production)
     //- if((process.env.NODE_ENV || 'dev') == 'dev')

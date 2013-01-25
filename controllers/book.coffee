@@ -23,7 +23,10 @@ exports.read = (req,res) ->
     if err
       res.json(404, {error: "Book not found"})
     else if book?
-      res.render 'books/book', {book}
+      res.render 'books/book', {
+        book
+        title: book.title
+      }
     else
       res.json(404, {error: "Book not found"})
 

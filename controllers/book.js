@@ -39,7 +39,8 @@
         });
       } else if (book != null) {
         return res.render('books/book', {
-          book: book
+          book: book,
+          title: book.title
         });
       } else {
         return res.json(404, {

@@ -19,7 +19,7 @@ block angular
   != js('bookPartial')
 
 block content
-  .span12.clearfix
+  .span12.clearfix(ng-controller="SingleBookCtrl")
     .row.book
       .span2
         div.pull-left(class="imageTag", style="width: 200px; text-align: center; margin-bottom: 10px;")
@@ -33,15 +33,16 @@ block content
         h5(style='display: inline;') ISBN: 
           span(class='isbn')= book.isbn
         p(class='description')= book.description
-        a.like(href="#", style="display: none") Gefällt mir
-        a.unlike(href="#", style="display: none") Gefällt mir nicht mehr
+        //TODO Reenable like buttons
+        a.likedisabled(href="#", style="display: none") Gefällt mir
+        a.unlikedisabled(href="#", style="display: none") Gefällt mir nicht mehr
       .span2
         .pull-right
-          .lenderId(style="display: none;")
-          .bookId(style="display: none;")
+          .lender(style="display: none;")= book.lender
+          .bookId(style="display: none;")= book._id
           img.lenderImage.pull-right
           br
-          span.lenderName.pull-right
+          span.lenderName.pull-right= book.lenderName
           br
           a.btn.btn-success.pull-right.borrowbtn(href='#', style="display: none;") Ausleihen
           a.btn.btn-warning.pull-right.deletebtn(href='#', style="display: none;") Entfernen

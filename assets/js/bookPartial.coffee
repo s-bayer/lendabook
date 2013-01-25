@@ -52,7 +52,7 @@ window.bookapp.factory 'BookPartial', [ 'Facebook', (Facebook) ->
 
   doUpdateBookPartial = (elem, likedBooks) ->
     bookId = $(elem).find(".bookId").text()
-    lenderId = $(elem).find(".lenderId").text()
+    lenderId = $(elem).find(".lender").text()
     ogUrl = 'http://www.lendabook.org/books/'+bookId
     updateLikeButton likedBooks[ogUrl]?, elem
     updateLenderArea bookId, lenderId, elem

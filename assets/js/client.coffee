@@ -33,7 +33,6 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', 'BooksSer
   prettifyBooks= (inputBooks) ->
     inputBooks.map (v) ->
       v.imageTag = "<img src='#{v.image}', style='overflow: hidden; width: 100px', width='100'>"
-      v.lenderId = v.lender
       v.bookId = v._id
       v
 

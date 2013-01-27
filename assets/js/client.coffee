@@ -45,6 +45,7 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', 'BooksSer
   $scope.showMoreBooks = () ->
     books.listjs.show(0,200)
     $('#moreBooks').hide()
+    updateAllBookPartials()
 
   # TODO SB descriptions should not be to long or shortened client-side
 

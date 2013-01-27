@@ -15,7 +15,9 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', 'BooksSer
       options = 
         item: 'book-item'
         page: 6
-      new List 'book-list', options
+      res = new List 'book-list', options
+      res.on 'updated', updateAllBookPartials
+      res
     )()
 
     add: (book, callback) ->
@@ -32,7 +34,7 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', 'BooksSer
             #alert "Eintragen des Buches fehlgeschlagen. Ist das Coverbild korrekt gesetzt?"
           , () -> #Success
             books.listjs.add prettifyBooks [$scope.newBook]
-            updateAllBookPartials()
+            #updateAllBookPartials()
             alert "Buch erfolgreich eingetragen."
             callback()
 
@@ -45,7 +47,7 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', 'BooksSer
   $scope.showMoreBooks = () ->
     books.listjs.show(0,200)
     $('#moreBooks').hide()
-    updateAllBookPartials()
+    #updateAllBookPartials()
 
   # TODO SB descriptions should not be to long or shortened client-side
 
@@ -63,7 +65,7 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', 'BooksSer
   BooksServer.getAllBooks
     success: (data) ->
       books.listjs.add prettifyBooks data
-      updateAllBookPartials()
+      #updateAllBookPartials()
 
   # $scope.OnTitleChange = () ->
   # Load book data from google books

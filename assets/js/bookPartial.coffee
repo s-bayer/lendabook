@@ -50,11 +50,10 @@ window.bookapp.factory 'BookPartial', [ 'Facebook', 'BooksServer', 'Analytics', 
       $(elem).find(".lenderImage").attr 'src', pictureUrl
     Facebook.getCurrentUser (currentUser) ->
       $(elem).find(".borrowbtn").click () ->
+        Analytics.trackShowBorrowRequestDialog isbn
         Facebook.lendingRequest bookId, lenderId,
           sent: ->
             Analytics.trackBorrowRequest isbn
-          cancelled: ->
-            Analytics.trackCancelledBorrowRequest isbn
       $(elem).find(".deletebtn").click () ->
         Analytics.trackBookDeletion isbn
         BooksServer.remove bookId

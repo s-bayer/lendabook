@@ -85,13 +85,15 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
       service.ensureLoggedIn -> FB.api '/'+id, callback
     getProfilePicture: (userId, callback) ->
       callback('https://graph.facebook.com/'+userId+'/picture')
-    lendingRequest: (bookId, lenderId) ->
+    lendingRequest: (bookId, lenderId, callbacks) ->
       service.ensureLoggedIn -> FB.ui {
         method: 'send'
         link: 'http://www.lendabook.org/books/'+ bookId
         to: lenderId
       }, (response) ->
         if(!response?)
+          if callbacks? && callbacks.cancelled?
+            callbacks.cancelled()
           #User cancelled the dialog
         else if(!response.success? || !response.success)
           #Error
@@ -101,6 +103,8 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
           FB.api '/me/'+appNamespace+':borrow', 'post', {book: "http://www.lendabook.org/books/"+bookId}, (response) ->
             #TODO Enable following block again
             #displayIfError(response)
+          if callbacks? && callbacks.sent?
+            callbacks.sent()
     offer: (bookId, errorhandler, successhandler) ->
       service.ensureLoggedIn -> FB.api '/me/'+appNamespace+':offer', 'post', {book: "http://www.lendabook.org/books/"+bookId}, (response)->
         handleIfError(response,errorhandler)

@@ -4,7 +4,7 @@ unless Array::filter
 
 # needed to work with minification
 window.bookapp = angular.module 'bookapp', []
-window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', 'BooksServer', 'BookPartial', ($scope, $http, Facebook, BooksServer, BookPartial) ->
+window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', 'BooksServer', 'BookPartial', 'Analytics', ($scope, $http, Facebook, BooksServer, BookPartial, Analytics) ->
 
   updateAllBookPartials = ->
     BookPartial.updateAllBookPartials (bookIdToRemoveFromList)->
@@ -45,6 +45,7 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', 'BooksSer
       v
 
   $scope.showMoreBooks = () ->
+    Analytics.trackShowMoreBooks()
     books.listjs.show(0,200)
     $('#moreBooks').hide()
     #updateAllBookPartials()
@@ -52,10 +53,12 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', 'BooksSer
   # TODO SB descriptions should not be to long or shortened client-side
 
   $scope.addBookModal = () ->
+    Analytics.trackShowAddBookDialog()
     Facebook.ensureLoggedIn ->
       $('#addBook').modal 'show'
 
   $scope.addBook = () ->
+    Analytics.trackOffer $scope.newBook.isbn
     Facebook.getCurrentUser (user) ->
       $scope.newBook.lender = user.id
       $scope.newBook.lenderName = user.first_name

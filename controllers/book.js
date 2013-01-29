@@ -5,7 +5,10 @@
   Book = require('../models/book.js');
 
   exports.list = function(req, res) {
-    return Book.find(function(err, books) {
+    var query;
+    query = Book.find({});
+    query.sort('title');
+    return query.exec(function(err, books) {
       if (err) {
         return res.json({
           error: 'Could not get books'

@@ -1,7 +1,9 @@
 Book = require '../models/book.js'
 
 exports.list = (req, res) ->
-  Book.find (err, books) ->
+  query = Book.find({})
+  query.sort 'title'
+  query.exec (err, books) ->
     if (err)
       res.json({error: 'Could not get books'})
     else

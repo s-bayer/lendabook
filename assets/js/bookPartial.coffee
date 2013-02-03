@@ -28,12 +28,14 @@ window.bookapp.factory 'BookPartial', [ 'Facebook', 'BooksServer', 'Analytics', 
     else
       $(elem).find(".unlike").hide()
       $(elem).find(".like").show()
+    $(elem).find(".like").unbind 'click'
     $(elem).find(".like").click () ->
       Analytics.trackLikeBook isbn
       Facebook.like bookId,
         success: ->
           $(elem).find(".like").hide()
           $(elem).find(".unlike").show()
+    $(elem).find(".unlike").unbind 'click'
     $(elem).find(".unlike").click () ->
       Analytics.trackUnlikeBook isbn
       Facebook.getLikedBooks (likedBooks) ->
@@ -49,6 +51,7 @@ window.bookapp.factory 'BookPartial', [ 'Facebook', 'BooksServer', 'Analytics', 
     Facebook.getProfilePicture lenderId, (pictureUrl)->
       $(elem).find(".lenderImage").attr 'src', pictureUrl
     Facebook.getCurrentUser (currentUser) ->
+      $(elem).find(".borrowbtn").unbind 'click'
       $(elem).find(".borrowbtn").click () ->
         if currentUser.first_name == "Open"
           alert "You're the OpenGraph TestUser. As a normal user there now is a send dialog displayed, where you can send a message to the friend offering the book. The BORROW action will only be created, when the user really sends a message. Unfortunatelly the OpenGraphTestUser isn't allowed to display a send dialog, so we won't display it but directly create the BORROW action."
@@ -60,6 +63,7 @@ window.bookapp.factory 'BookPartial', [ 'Facebook', 'BooksServer', 'Analytics', 
               Analytics.trackBorrowRequest isbn
               #Success, register opengraph action for borrowing
               Facebook.borrow bookId
+      $(elem).find(".deletebtn").unbind 'click'
       $(elem).find(".deletebtn").click () ->
         Analytics.trackBookDeletion isbn
         BooksServer.remove bookId

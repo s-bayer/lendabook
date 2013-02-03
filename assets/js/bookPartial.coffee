@@ -50,10 +50,16 @@ window.bookapp.factory 'BookPartial', [ 'Facebook', 'BooksServer', 'Analytics', 
       $(elem).find(".lenderImage").attr 'src', pictureUrl
     Facebook.getCurrentUser (currentUser) ->
       $(elem).find(".borrowbtn").click () ->
-        Analytics.trackShowBorrowRequestDialog isbn
-        Facebook.lendingRequest bookId, lenderId,
-          sent: ->
-            Analytics.trackBorrowRequest isbn
+        if currentUser.first_name == "Open"
+          alert "You're the OpenGraph TestUser. As a normal user there now is a send dialog displayed, where you can send a message to the friend offering the book. The BORROW action will only be created, when the user really sends a message. Unfortunatelly the OpenGraphTestUser isn't allowed to display a send dialog, so we won't display it but directly create the BORROW action."
+          Facebook.borrow bookId
+        else
+          Analytics.trackShowBorrowRequestDialog isbn
+          Facebook.lendingRequest bookId, lenderId,
+            sent: ->
+              Analytics.trackBorrowRequest isbn
+              #Success, register opengraph action for borrowing
+              Facebook.borrow bookId
       $(elem).find(".deletebtn").click () ->
         Analytics.trackBookDeletion isbn
         BooksServer.remove bookId

@@ -67,7 +67,7 @@ block content
             button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;
             h3 Buch eintragen
           .modal-body.clearfix
-            form(style="float: left; width: 50%;", name='addBookForm')
+            form(style="float: left; width: 50%;", name='addBookForm', id="addBookForm")
               input(type="text", placeholder="Titel", ng-model="newBook.title", ng-change="OnTitleChange()", required)
               br
               input(type="text", placeholder="ISBN", ng-model="newBook.isbn", required)
@@ -82,8 +82,8 @@ block content
               //br
               //input(type="text", placeholder="Stadt", ng-model="newBook.location", required)
             div(style="float: right; width: 50%;")
-              img(style="overflow: hidden; width: 100px; top: 0px;", width="100", src="{{newBook.image}}")
+              img(id="newBookImage", style="overflow: hidden; width: 100px; top: 0px;", width="100", src="{{newBook.image}}")
           .modal-footer
-            a(href="#", class="btn btn-primary", ng-click="addBook()", ng-disabled="addBookForm.$invalid", data-dismiss="modal") Buch eintragen
+            a(href="#", class="btn btn-primary", ng-click="addBook()") Buch eintragen
 
         {{$.errors}}

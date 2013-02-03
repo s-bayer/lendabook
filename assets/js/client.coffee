@@ -52,18 +52,35 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', 'BooksSer
 
   # TODO SB descriptions should not be to long or shortened client-side
 
+  checkImage = (src,callbacks) ->
+    tester = new Image()
+    tester.onload = callbacks.success
+    tester.onerror = callbacks.failure
+    tester.src = src
+
   $scope.addBookModal = () ->
     Analytics.trackShowAddBookDialog()
     Facebook.ensureLoggedIn ->
       $('#addBook').modal 'show'
 
+  $scope.newBookIsValid = () ->
+    $scope? && $scope.newBook? && $scope.newBook.title? && $scope.newBook.title!="" && $scope.newBook.image? && $scope.newBook.image!="" && $scope.newBook.isbn? && $scope.newBook.isbn!="" && $scope.newBook.author? && $scope.newBook.author!="" && $scope.newBook.description && $scope.newBook.description!=""
+
   $scope.addBook = () ->
-    Analytics.trackOffer $scope.newBook.isbn
-    Facebook.getCurrentUser (user) ->
-      $scope.newBook.lender = user.id
-      $scope.newBook.lenderName = user.first_name
-      books.add $scope.newBook, ->
-        $scope.newBook = {}
+    if !$scope.newBookIsValid()
+      alert "Bitte fülle alle Felder aus"
+    else
+      checkImage $('#newBookImage').attr('src'),
+        success: ->
+          Analytics.trackOffer $scope.newBook.isbn
+          Facebook.getCurrentUser (user) ->
+            $scope.newBook.lender = user.id
+            $scope.newBook.lenderName = user.first_name
+            books.add $scope.newBook, ->
+              $scope.newBook = {}
+          $('#addBook').modal 'hide'
+        failure: ->
+          alert("Bitte wähle ein gültiges Coverbild aus.")
 
   BooksServer.getAllBooks
     success: (data) ->

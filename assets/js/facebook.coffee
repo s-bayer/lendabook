@@ -1,5 +1,5 @@
 # needed to work with minification
-window.bookapp.factory 'Facebook', [ '$http', ($http) ->
+window.bookapp.factory 'Facebook', [ '$http', 'Analytics', ($http,Analytics) ->
 
   appId = '516801898340306'
   appNamespace = 'lend-it'
@@ -67,10 +67,13 @@ window.bookapp.factory 'Facebook', [ '$http', ($http) ->
     ensureLoggedIn: (callback) ->
       service.ensureInit ->
         if !fbAppAuthorized
+          Analytics.trackShowAuthRequest()
           FB.login (response) ->
             if response.authResponse
+              Analytics.trackAcceptAuthRequest()
               callback()
             else
+              Analytics.trackDenyAuthRequest()
               alert("Du musst die Anwendung akzeptieren, um diese Funktion auszuführen.")
           , {scope: 'publish_actions'}
         else

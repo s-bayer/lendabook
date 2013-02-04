@@ -80,7 +80,6 @@ window.bookapp.factory 'BookPartial', [ 'Facebook', 'BooksServer', 'Analytics', 
     updateLikeButton likedBooks[getBookOgUrl(bookId)]?, elem
     updateLenderArea elem, removefunc
 
-
   service = 
     updateBookPartial: (elem,removefunc) ->
       Facebook.getLikedBooks (likedBooks)->

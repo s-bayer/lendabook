@@ -32,6 +32,7 @@ window.bookapp.factory 'Facebook', [ '$http', 'Analytics', ($http,Analytics) ->
     FB.Event.subscribe 'auth.authResponseChange', handleAuthChange
     FB.getLoginStatus handleAuthChange
 
+  authSuccessCallback = ->
 
   # Load Facebook plugin
   ((d, s, id) ->
@@ -71,6 +72,7 @@ window.bookapp.factory 'Facebook', [ '$http', 'Analytics', ($http,Analytics) ->
           FB.login (response) ->
             if response.authResponse
               Analytics.trackAcceptAuthRequest()
+              authSuccessCallback()
               callback()
             else
               Analytics.trackDenyAuthRequest()
@@ -78,6 +80,8 @@ window.bookapp.factory 'Facebook', [ '$http', 'Analytics', ($http,Analytics) ->
           , {scope: 'publish_actions'}
         else
           callback()
+    setAuthSuccessCallback: (callback) ->
+      authSuccessCallback = callback
     onLoginStatusChange: (callback) ->
       service.ensureInit ->
         FB.Event.subscribe 'auth.authResponseChange', callback

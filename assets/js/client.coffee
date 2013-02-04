@@ -10,6 +10,9 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', 'BooksSer
     BookPartial.updateAllBookPartials (bookIdToRemoveFromList)->
       books.listjs.remove "bookId", bookIdToRemoveFromList
 
+  Facebook.setAuthSuccessCallback ->
+    updateAllBookPartials()
+
   books = 
     listjs:(() -> 
       options = 

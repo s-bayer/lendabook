@@ -47,8 +47,6 @@
 
   app.post('/facebook', routes.facebook);
 
-  app.get('/test', routes.test);
-
   if (env === 'dev') {
     app.get('/facebook', routes.facebook);
   }

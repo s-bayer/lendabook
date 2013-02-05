@@ -37,7 +37,6 @@ app.configure 'development', () ->
 
 app.get '/', routes.index
 app.post '/facebook', routes.facebook
-app.get '/test', routes.test
 if env=='dev'
   app.get '/facebook', routes.facebook
 app.get '/impressum', routes.impressum

@@ -10,12 +10,6 @@
     });
   };
 
-  exports.test = function(req, res) {
-    return res.render('test', {
-      title: 'Lend a book'
-    });
-  };
-
   exports.facebook = function(req, res) {
     return res.render('facebook', {
       title: 'Lend a book'

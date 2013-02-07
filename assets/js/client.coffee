@@ -61,6 +61,9 @@ window.bookapp.controller 'BookCtrl', [ '$scope', '$http', 'Facebook', 'BooksSer
     tester.onerror = callbacks.failure
     tester.src = src
 
+  $scope.search = ->
+    Analytics.trackSearching()
+
   $scope.addBookModal = () ->
     Analytics.trackShowAddBookDialog()
     Facebook.ensureLoggedIn ->

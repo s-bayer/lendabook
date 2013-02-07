@@ -26,7 +26,7 @@ block content
           //small.pull-right over 3000 books available in Karlsruhe
         .row(id='book-list')
           form.span12
-            input(class="search", type="text", placeholder="Name, Autor, Beschreibung, ISBN …")
+            input(class="search", type="text", placeholder="Name, Autor, Beschreibung, ISBN …", ng-model="searchterm", ng-change="search()")
           ul.unstyled.span12(class='list')
           div.hidden
             li(id='book-item')

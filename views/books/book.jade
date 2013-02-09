@@ -18,6 +18,7 @@ block angular
   != js('facebook')
   != js('booksServer')
   != js('bookPartial')
+  != js('analytics')
 
 block content
   .span12.clearfix(ng-controller="SingleBookCtrl")
@@ -34,11 +35,10 @@ block content
         h5(style='display: inline;') ISBN: 
           span(class='isbn')= book.isbn
         p(class='description')= book.description
-        //TODO Reenable like buttons
-        a.likedisabled(href="#", style="display: none") Gefällt mir
-        a.unlikedisabled(href="#", style="display: none") Gefällt mir nicht mehr
+        a.like(href="#", style="display: none") Gefällt mir
+        a.unlike(href="#", style="display: none") Gefällt mir nicht mehr
       .span2
-        .pull-right
+        .lend.pull-right
           .lender(style="display: none;")= book.lender
           .bookId(style="display: none;")= book._id
           img.lenderImage.pull-right
